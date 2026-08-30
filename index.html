@@ -54,8 +54,8 @@
     }
 
     /* ALL HEADINGS USE ROCA TWO BLACK (WEIGHT 900) */
-    h1, h2, h3, .onboarding-h1, .page-header, .brand-title, .modal-title, .shift-title {
-      font-family:'Roca Two Black', serif !important;
+    h1, h2, h3, .onboarding-h1, .page-header, .page-header span:first-child, .brand-title, .modal-title, .shift-title {
+      font-family: 'Roca Two Black', serif !important;
       font-weight: 900 !important;
       letter-spacing: -0.01em;
     }
@@ -194,9 +194,9 @@
 
     /* COMMON HEADINGS */
     h2.page-header {
-      font-family:'Onest', sans-serif;
+      font-family: 'Roca Two Black', serif;
       font-size: 1.6rem;
-      font-weight: 700;
+      font-weight: 800;
       color: #111;
       margin-bottom: 14px;
       display: flex;
@@ -259,7 +259,8 @@
       outline: none;
       margin-bottom: 10px;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%20666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       background-size: 16px;
@@ -687,35 +688,31 @@
           </button>
         </h2>
 
-        <div class="filter-tabs">
-          <div class="filter-tab active" onclick="switchInventorySubtab('products', this)">Products</div>
-          <div class="filter-tab" onclick="switchInventorySubtab('discounts', this)">Discounts</div>
-          <div class="filter-tab" onclick="switchInventorySubtab('categories', this)">Product Categories</div>
+        <div class="search-wrapper">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input type="text" class="search-box" id="inv-search-input" placeholder="Search" onkeyup="filterInventoryProducts(this.value)">
         </div>
+
+        <select class="select-dropdown" style="margin-bottom:12px; font-weight:700;" onchange="switchInventorySubtabDropdown(this.value)">
+          <option value="products">Products</option>
+          <option value="discounts">Discounts</option>
+          <option value="categories">Product Categories</option>
+        </select>
 
         <!-- INVENTORY SUBTAB 1: PRODUCTS -->
         <div id="inv-sub-products">
-          <div class="search-wrapper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <input type="text" class="search-box" placeholder="Search" onkeyup="filterInventoryProducts(this.value)">
-          </div>
-
           <div class="product-grid-3col" id="inv-product-grid">
             <!-- Rendered by JS -->
           </div>
-          <button class="fab-add-btn" onclick="openAddProductModal()" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 12H18M12 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Add Product</button>
+          <button class="fab-add-btn" onclick="openAddProductModal()"><i class="fa-solid fa-plus"></i> Add Product</button>
         </div>
 
         <!-- INVENTORY SUBTAB 2: DISCOUNTS -->
         <div id="inv-sub-discounts" style="display:none;">
-          <div class="search-wrapper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <input type="text" class="search-box" placeholder="Search discounts...">
-          </div>
           <div id="discounts-list">
             <!-- Rendered by JS -->
           </div>
-          <button class="fab-add-btn" onclick="openAddDiscountModal()" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 12H18M12 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Add Discount</button>
+          <button class="fab-add-btn" onclick="openAddDiscountModal()"><i class="fa-solid fa-plus"></i> Add Discount</button>
         </div>
 
         <!-- INVENTORY SUBTAB 3: CATEGORIES -->
@@ -723,7 +720,7 @@
           <div id="categories-list">
             <!-- Rendered by JS -->
           </div>
-          <button class="fab-add-btn" onclick="openAddCategoryModal()" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 12H18M12 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Add Category</button>
+          <button class="fab-add-btn" onclick="openAddCategoryModal()"><i class="fa-solid fa-plus"></i> Add Category</button>
         </div>
       </section>
 
@@ -932,13 +929,19 @@
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Gross Sales</span><span id="shift-summary-gross">₱1,115.00</span></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Cash Refunds</span><span>₱0.00</span></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Discounts</span><span>₱50.00</span></div>
-        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; border-top:1px solid #cbd5e1; padding-top:6px;">
-          <span>Net Sales</span><span class="net-sales-amount" style="color:#10b981;" id="shift-summary-net">₱1,065.00</span>
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.1rem; border-top:1px solid #cbd5e1; padding-top:6px;">
+          <span style="font-weight:600;">Net Sales</span><span class="net-sales-amount" style="color:#10b981; font-weight:600;" id="shift-summary-net">₱1,065.00</span>
         </div>
       </div>
 
-      <button class="btn-gold" onclick="openProductTallyModal()">See Product Tally</button>
-      <button class="btn-gray" onclick="confirmEndShift()">End Shift</button>
+      <button class="btn-gold" onclick="openProductTallyModal()" style="margin-bottom:8px;">See Product Tally</button>
+      <button class="btn-gray" onclick="confirmEndShift()" style="margin-bottom:12px;">End Shift</button>
+
+      <!-- SHIFT SUMMARY RECEIPT HISTORY LIST (FIGMA MATCH) -->
+      <h3 style="font-family:'Roca Two Black', serif; font-size:1.05rem; font-weight:800; margin:4px 0 8px 0;">Receipt History</h3>
+      <div id="shift-receipts-list" style="flex:1; min-height:180px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-bottom:20px;">
+        <!-- Rendered dynamically by JS -->
+      </div>
     </div>
   </div>
 
@@ -949,7 +952,21 @@
         <span class="modal-title">Shift Product Tally</span>
         <button class="exit-btn" onclick="closeModal('modal-product-tally')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
-      <div id="product-tally-list">
+
+      <div class="search-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <input type="text" class="search-box" id="tally-search-input" placeholder="Search" onkeyup="filterProductTally()">
+      </div>
+
+      <select class="select-dropdown" id="tally-cat-dropdown" onchange="filterProductTally()" style="margin-bottom:12px; font-weight:700;">
+        <option value="all">Category</option>
+        <option value="stickers">Stickers</option>
+        <option value="prints">Art Prints</option>
+        <option value="totes">Tote Bags</option>
+        <option value="shirts">T-Shirts</option>
+      </select>
+
+      <div id="product-tally-list" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-bottom:20px;">
         <!-- Injected by JS -->
       </div>
     </div>
@@ -1294,14 +1311,23 @@
 
     function processCheckout() {
       const method = document.getElementById('pos-payment-select').value;
-      const total = document.getElementById('cart-total-amount').innerText;
+      const totalStr = document.getElementById('cart-total-amount').innerText;
+      const totalVal = parseFloat(totalStr.replace('₱', '')) || 0;
 
       cart.forEach(item => {
         const prod = products.find(p => p.id === item.id);
         if (prod) prod.sold = (prod.sold || 0) + item.qty;
       });
 
-      alert(`✅ Transaction Checkout Complete!\nPayment: ${method}\nTotal: ${total}`);
+      // Record receipt in Shift Receipt History
+      shiftReceipts.unshift({
+        id: `1-00${shiftReceipts.length + 1}`,
+        date: '01/11/2025',
+        time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase(),
+        amount: totalVal
+      });
+
+      alert(`✅ Transaction Checkout Complete!\nPayment: ${method}\nTotal: ${totalStr}`);
       cart = [];
       updateCartBadgeAndTotalSalesCount();
       renderPosProducts();
@@ -1309,12 +1335,12 @@
     }
 
     // ================= INVENTORY LOGIC =================
-    function switchInventorySubtab(sub, el) {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('inv-sub-products').style.display = sub === 'products' ? 'block' : 'none';
-      document.getElementById('inv-sub-discounts').style.display = sub === 'discounts' ? 'block' : 'none';
-      document.getElementById('inv-sub-categories').style.display = sub === 'categories' ? 'block' : 'none';
+    function switchInventorySubtabDropdown(val) {
+      document.getElementById('inv-sub-products').style.display = val === 'products' ? 'block' : 'none';
+      document.getElementById('inv-sub-discounts').style.display = val === 'discounts' ? 'block' : 'none';
+      document.getElementById('inv-sub-categories').style.display = val === 'categories' ? 'block' : 'none';
+      if (val === 'discounts') renderDiscounts();
+      if (val === 'categories') renderCategories();
     }
 
     function renderInventoryProducts() {
@@ -1683,7 +1709,14 @@
       }
     }
 
-    // ================= SHIFT SUMMARY & ONBOARDING MODALS =================
+    // ================= SHIFT SUMMARY & RECEIPT HISTORY LOGIC =================
+    let shiftReceipts = [
+      { id: '1-001', date: '01/11/2025', time: '4:44pm', amount: 100.00 },
+      { id: '1-002', date: '01/11/2025', time: '4:52pm', amount: 250.00 },
+      { id: '1-003', date: '01/11/2025', time: '5:15pm', amount: 480.00 },
+      { id: '1-004', date: '01/11/2025', time: '5:30pm', amount: 285.00 }
+    ];
+
     function openStartShiftModal() { document.getElementById('modal-start-shift').classList.add('active'); }
     function confirmStartShift() {
       isShiftOpen = true;
@@ -1692,7 +1725,34 @@
       closeModal('modal-start-shift');
     }
 
-    function openTotalSalesModal() { document.getElementById('modal-total-sales').classList.add('active'); }
+    function openTotalSalesModal() {
+      renderShiftReceiptsList();
+      document.getElementById('modal-total-sales').classList.add('active');
+    }
+
+    function renderShiftReceiptsList() {
+      const container = document.getElementById('shift-receipts-list');
+      if (!container) return;
+      if (shiftReceipts.length === 0) {
+        container.innerHTML = `<p style="font-size:0.8rem; color:var(--text-muted); text-align:center; padding:10px;">No receipts recorded for this shift yet.</p>`;
+        return;
+      }
+      container.innerHTML = shiftReceipts.map(r => `
+        <div class="list-card" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:0; padding:10px 12px;" onclick="openReceiptDetailModal('${r.id}')">
+          <div>
+            <div style="font-weight:700; font-size:0.88rem;">Receipt #${r.id}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">${r.date} | ${r.time}</div>
+          </div>
+          <div style="font-weight:700; font-size:0.95rem; color:#111;">₱${parseFloat(r.amount).toFixed(2)}</div>
+        </div>
+      `).join('');
+    }
+
+    function openReceiptDetailModal(id) {
+      document.getElementById('receipt-modal-title').innerText = `Receipt #${id}`;
+      openCartReceiptModal();
+    }
+
     function confirmEndShift() {
       if (confirm('Are you sure you want to end this physical booth shift?')) {
         isShiftOpen = false;
@@ -1703,14 +1763,41 @@
     }
 
     function openProductTallyModal() {
-      const container = document.getElementById('product-tally-list');
-      container.innerHTML = products.map(p => `
-        <div class="list-card">
-          <span>${p.name}</span>
-          <span style="font-weight:700; color:#d97706;">${p.sold} pcs sold</span>
-        </div>
-      `).join('');
+      if (document.getElementById('tally-search-input')) document.getElementById('tally-search-input').value = '';
+      if (document.getElementById('tally-cat-dropdown')) document.getElementById('tally-cat-dropdown').value = 'all';
+      filterProductTally();
       document.getElementById('modal-product-tally').classList.add('active');
+    }
+
+    function filterProductTally() {
+      const searchVal = (document.getElementById('tally-search-input')?.value || '').toLowerCase();
+      const catVal = document.getElementById('tally-cat-dropdown')?.value || 'all';
+      const container = document.getElementById('product-tally-list');
+
+      let filtered = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchVal);
+        const matchesCat = (catVal === 'all') || (p.category.toLowerCase().includes(catVal.toLowerCase()));
+        return matchesSearch && matchesCat;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:16px;">No products found</p>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => {
+        const soldCount = p.sold || 0;
+        const totalStock = p.stock || 99;
+        return `
+          <div class="list-card" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; margin-bottom:0;">
+            <div>
+              <div style="font-weight:700; font-size:0.9rem;">${p.name}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">₱${p.price.toFixed(2)} | ${p.category}</div>
+            </div>
+            <div style="font-weight:700; font-size:0.95rem; color:#111;">${soldCount}/${totalStock}</div>
+          </div>
+        `;
+      }).join('');
     }
 
     function openOnboardingModal() {
