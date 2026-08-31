@@ -70,10 +70,7 @@ function openReceiptDetailModal(id) {
 
   const refundBtn = document.getElementById('receipt-refund-btn');
   if (refundBtn) {
-    refundBtn.innerText = 'Refund Transaction (Upgrade Required)';
-    refundBtn.disabled = false;
-    refundBtn.style.opacity = '0.6';
-    refundBtn.onclick = () => refundReceipt(receipt.id);
+    refundBtn.style.display = 'none';
   }
 
   document.getElementById('modal-receipt-detail').classList.add('active');
@@ -84,7 +81,13 @@ function openReceiptDetailModal(id) {
  * @param {string} id - Receipt ID
  */
 function refundReceipt(id) {
-  alert('🔒 Automated receipt refund processing and stock adjustment is a Premium Tier feature. Budget upgrade required to unlock refund management.');
+  const receipt = shiftReceipts.find(r => r.id === id);
+  if (receipt) {
+    receipt.refunded = true;
+    alert(`Transaction #${receipt.id} has been refunded.`);
+    openReceiptDetailModal(receipt.id);
+    renderShiftSummaryReceipts();
+  }
 }
 
 /** Confirms ending of physical booth shift */

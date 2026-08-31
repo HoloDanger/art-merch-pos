@@ -53,8 +53,8 @@ function filterInventoryProducts(val) {
  * @param {Event} event - File input change event
  */
 function handleProductImageUpload(event) {
-  alert('📷 Live photo upload from device gallery is a Premium Tier feature. Budget upgrade required to unlock file picker integration.');
-  if (event && event.target) event.target.value = '';
+  const fileInput = document.getElementById('product-img-file-input');
+  if (fileInput) fileInput.click();
 }
 
 /**

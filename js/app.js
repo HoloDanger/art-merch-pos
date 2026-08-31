@@ -217,11 +217,12 @@ function openTrashModal(filter = 'all') {
             <span style="font-weight:400; font-size:0.95rem; color:#111111;">${item.price || ''}</span>
             <div style="display:flex; align-items:center; gap:8px;">
               <!-- Yellow Restore Button (#FDBE49 background with black icon) -->
-              <button onclick="restoreTrashItem(${realIdx})" style="background:#FDBE49; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Restore Item">
+              <button onclick="restoreTrashItem(${realIdx})" style="background:#FDBE49; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:#000000;" title="Restore Item">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="1.8"/>
-                  <path d="M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C13.8 16 15.31 14.81 15.8 13.18" stroke="#000000" stroke-width="1.8" stroke-linecap="round"/>
-                  <path d="M8 9.5V12H10.5" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10.33 7.50977C10.83 7.35977 11.38 7.25977 12 7.25977C14.76 7.25977 17 9.49977 17 12.2598C17 15.0198 14.76 17.2598 12 17.2598C9.24 17.2598 7 15.0198 7 12.2598C7 11.2298 7.31 10.2798 7.84 9.47977" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9.62012 7.65024L11.2801 5.74023" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9.62012 7.65039L11.5601 9.07039" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#000000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </button>
               <!-- Red Delete Button (#F93C3C background with white icon) -->
@@ -413,8 +414,9 @@ function renderOnboardingStep(step) {
 
 /** Settings sub-page action dispatcher */
 function openSettingsSubpage(sub) {
-  if (sub === 'account') alert('Account Management Settings');
-  else if (sub === 'integrations') openSpreadsheetIntegrationModal();
-  else if (sub === 'payment') alert('Payment Methods Manager');
-  else if (sub === 'notifications') alert('Notifications Toggles');
+  if (sub === 'integrations') {
+    openSpreadsheetIntegrationModal();
+  } else if (sub === 'payment') {
+    openEcomIntegrationModal();
+  }
 }
