@@ -198,10 +198,6 @@ function openTrashModal(filter = 'all') {
     filtered = trashBin.filter(item => item.itemType === 'shift');
   }
 
-  if (!filtered || filtered.length === 0) {
-    filtered = trashBin;
-  }
-
   if (filtered.length === 0) {
     container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding:24px 0;">Trash is empty.</p>`;
   } else {
@@ -265,15 +261,21 @@ function permanentlyDeleteTrashItem(idx) {
   }
 }
 
-/** Empties entire Trash Bin queue */
+/** Empties Trash Bin queue for active category */
 function emptyAllTrash() {
   if (trashBin.length === 0) {
     alert('Trash is already empty!');
     return;
   }
   if (confirm('Are you sure you want to permanently delete all items in the trash?')) {
-    trashBin = [];
-    openTrashModal();
+    if (activeTrashFilter === 'inventory') {
+      trashBin = trashBin.filter(item => item.itemType === 'shift');
+    } else if (activeTrashFilter === 'sales') {
+      trashBin = trashBin.filter(item => item.itemType !== 'shift');
+    } else {
+      trashBin = [];
+    }
+    openTrashModal(activeTrashFilter);
   }
 }
 
