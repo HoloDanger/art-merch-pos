@@ -145,20 +145,29 @@ function renderCategories() {
  * @param {number} id - Item ID or array index
  */
 function deleteInventoryItem(type, id) {
-  if (confirm(`Are you sure you want to delete this ${type}? It will be moved to the trash bin.`)) {
+  if (confirm(`Are you sure you want to delete this ${type}? It will be moved to the trash.`)) {
     if (type === 'product') {
       const item = products.find(p => p.id === id);
-      if (item) trashBin.push({ type: 'Product', name: item.name });
+      if (item) {
+        trashBin.push({
+          id: item.id,
+          name: item.name,
+          datetime: `Category: ${item.category}`,
+          price: `₱${item.price.toFixed(2)}`,
+          itemType: 'product',
+          itemData: { ...item }
+        });
+      }
       products = products.filter(p => p.id !== id);
       renderInventoryProducts();
       renderPosProducts();
     } else if (type === 'discount') {
       const item = discounts.find(d => d.id === id);
-      if (item) trashBin.push({ type: 'Discount', name: item.name });
+      if (item) trashBin.push({ id: item.id, name: item.name, datetime: 'Discount Coupon', price: item.val, itemType: 'discount' });
       discounts = discounts.filter(d => d.id !== id);
       renderDiscounts();
     } else if (type === 'category') {
-      trashBin.push({ type: 'Category', name: categories[id] });
+      trashBin.push({ id: Date.now(), name: categories[id], datetime: 'Merch Category', price: '', itemType: 'category' });
       categories.splice(id, 1);
       renderCategories();
       refreshCategoryDropdowns();

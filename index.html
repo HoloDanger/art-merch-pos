@@ -79,7 +79,13 @@
 
       <!-- ================= SECTION 2: INVENTORY PAGE ================= -->
       <section id="sec-inventory" class="page-section">
-        <h2 class="page-header">Inventory</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h2 class="page-header" style="margin:0;">Inventory</h2>
+          <button onclick="openTrashModal('inventory')" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Trash Bin">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Trash</span>
+          </button>
+        </div>
 
         <div class="search-wrapper">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11.5" cy="11.5" r="7.5" stroke="#94a3b8" stroke-width="1.8"/><path d="M17 17L21 21" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -151,7 +157,7 @@
       <section id="sec-sales" class="page-section">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
           <h2 class="page-header" style="margin:0;">Sales Report</h2>
-          <button onclick="openTrashModal()" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Trash Bin">
+          <button onclick="openTrashModal('sales')" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Trash Bin">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>Trash</span>
           </button>
@@ -544,7 +550,7 @@
   <div class="modal-overlay" id="modal-trash">
     <div class="modal-card">
       <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <h2 class="modal-title" style="font-family:'Roca Two Black', serif; font-size:1.6rem; font-weight:800; margin:0;">Trash</h2>
+        <h2 class="modal-title" id="trash-modal-title" style="font-family:'Roca Two Black', serif; font-size:1.6rem; font-weight:800; margin:0;">Trash</h2>
         <div style="display:flex; align-items:center; gap:16px;">
           <button onclick="emptyAllTrash()" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Delete All">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -578,10 +584,10 @@
   </div> <!-- Close .mobile-frame -->
 
   <!-- JavaScript Modules -->
-  <script src="js/data.js?v=2.9"></script>
-  <script src="js/pos.js?v=2.9"></script>
-  <script src="js/inventory.js?v=2.9"></script>
-  <script src="js/shift.js?v=2.9"></script>
-  <script src="js/app.js?v=2.9"></script>
+  <script src="js/data.js?v=3.1"></script>
+  <script src="js/pos.js?v=3.1"></script>
+  <script src="js/inventory.js?v=3.1"></script>
+  <script src="js/shift.js?v=3.1"></script>
+  <script src="js/app.js?v=3.1"></script>
 </body>
 </html>

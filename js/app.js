@@ -173,62 +173,94 @@ function openInventoryTrashModal() { openTrashModal('Inventory'); }
 function openSalesTrashModal() { openTrashModal('Sales Report'); }
 function openTaskTrashModal() { openTrashModal('Event Prep'); }
 
+let activeTrashFilter = 'all';
+
 /**
- * Opens Trash Bin modal and lists soft-deleted items.
- * @param {string} [source] - Context section tag
+ * Opens Trash Bin modal and lists soft-deleted items based on filter ('inventory' | 'sales' | 'all').
+ * @param {string} [filter] - Filter section tag
  */
-function openTrashModal(source = 'All') {
+function openTrashModal(filter = 'all') {
+  activeTrashFilter = filter;
   const container = document.getElementById('trash-items-container');
+  const titleEl = document.getElementById('trash-modal-title');
   if (!container) return;
-  if (trashBin.length === 0) {
-    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding:20px 0;">Trash is empty.</p>`;
+
+  if (titleEl) {
+    if (filter === 'inventory') titleEl.innerText = 'Inventory Trash';
+    else if (filter === 'sales') titleEl.innerText = 'Sales Trash';
+    else titleEl.innerText = 'Trash';
+  }
+
+  let filtered = trashBin;
+  if (filter === 'inventory') {
+    filtered = trashBin.filter(item => item.itemType === 'product' || item.itemType === 'discount' || item.itemType === 'category');
+  } else if (filter === 'sales') {
+    filtered = trashBin.filter(item => item.itemType === 'shift');
+  }
+
+  if (!filtered || filtered.length === 0) {
+    filtered = trashBin;
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding:24px 0;">Trash is empty.</p>`;
   } else {
-    container.innerHTML = trashBin.map((item, i) => `
-      <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; margin-bottom:8px;">
-        <div>
-          <div style="font-weight:700; font-size:0.92rem;">${item.name}</div>
-          <div style="font-size:0.78rem; color:var(--text-muted);">${item.datetime || item.info || 'Aug. 9, 2026 | 4:29 PM'}</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span style="font-weight:400; font-size:0.95rem; color:#111111;">${item.price || '₱12,400.00'}</span>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <!-- Yellow Restore Button (#FDBE49 background with black icon) -->
-            <button onclick="restoreTrashItem(${i})" style="background:#FDBE49; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Restore Shift">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="1.8"/>
-                <path d="M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C13.8 16 15.31 14.81 15.8 13.18" stroke="#000000" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M8 9.5V12H10.5" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <!-- Red Delete Button (#F93C3C background with white icon) -->
-            <button onclick="permanentlyDeleteTrashItem(${i})" style="background:#F93C3C; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Delete Permanently">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </button>
+    container.innerHTML = filtered.map((item) => {
+      const realIdx = trashBin.findIndex(t => t.id === item.id);
+      return `
+        <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; margin-bottom:8px;">
+          <div>
+            <div style="font-weight:700; font-size:0.92rem;">${item.name}</div>
+            <div style="font-size:0.78rem; color:var(--text-muted);">${item.datetime || 'Aug. 9, 2026 | 4:29 PM'}</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-weight:400; font-size:0.95rem; color:#111111;">${item.price || ''}</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <!-- Yellow Restore Button (#FDBE49 background with black icon) -->
+              <button onclick="restoreTrashItem(${realIdx})" style="background:#FDBE49; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Restore Item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="1.8"/>
+                  <path d="M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C13.8 16 15.31 14.81 15.8 13.18" stroke="#000000" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M8 9.5V12H10.5" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Red Delete Button (#F93C3C background with white icon) -->
+              <button onclick="permanentlyDeleteTrashItem(${realIdx})" style="background:#F93C3C; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Delete Permanently">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
   document.getElementById('modal-trash').classList.add('active');
 }
 
 /** Restores item from Trash Bin */
 function restoreTrashItem(idx) {
-  alert(`Restored ${trashBin[idx].name}!`);
+  const item = trashBin[idx];
+  if (!item) return;
+  if (item.itemType === 'product' && item.itemData) {
+    products.push(item.itemData);
+    renderInventoryProducts();
+    renderPosProducts();
+  }
+  alert(`Restored ${item.name}!`);
   trashBin.splice(idx, 1);
-  openTrashModal();
+  openTrashModal(activeTrashFilter);
 }
 
 /** Permanently deletes item from Trash Bin */
 function permanentlyDeleteTrashItem(idx) {
   if (confirm(`Permanently delete "${trashBin[idx].name}" from trash? This action cannot be undone.`)) {
     trashBin.splice(idx, 1);
-    openTrashModal();
+    openTrashModal(activeTrashFilter);
   }
 }
 

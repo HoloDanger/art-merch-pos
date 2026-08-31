@@ -49,10 +49,11 @@ let tasks = [
 /** @type {Array<{id: number, name: string, category: string, price: number, qty: number}>} Active checkout cart */
 let cart = [];
 
-/** @type {Array<{id: number, name: string, datetime: string, price: string}>} Soft-deleted shifts queue */
+/** @type {Array<{id: number, name: string, datetime: string, price: string, itemType: string, itemData?: Object}>} Soft-deleted queue */
 let trashBin = [
-  { id: 1, name: 'Shift 1', datetime: 'Aug. 8, 2026 | 4:29 PM', price: '₱12,400.00' },
-  { id: 2, name: 'Shift 2', datetime: 'Aug. 1, 2026 | 6:15 PM', price: '₱9,850.00' }
+  { id: 101, name: 'Shift 1', datetime: 'Aug. 8, 2026 | 4:29 PM', price: '₱12,400.00', itemType: 'shift' },
+  { id: 102, name: 'Cat Vinyl Sticker (Out of Stock)', datetime: 'Category: Stickers', price: '₱50.00', itemType: 'product', itemData: { id: 1001, name: 'Cat Vinyl Sticker (Restocked)', category: 'stickers', price: 50, cost: 15, stock: 30, sold: 10, img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60' } },
+  { id: 103, name: 'Cyberpunk Art Print (A4)', datetime: 'Category: Art Prints', price: '₱350.00', itemType: 'product', itemData: { id: 1002, name: 'Cyberpunk Art Print (A4)', category: 'prints', price: 350, cost: 100, stock: 15, sold: 2, img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60' } }
 ];
 
 /** 
