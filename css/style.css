@@ -1,0 +1,508 @@
+:root {
+  --bg-canvas: #4f555e;
+  --app-bg: #ffffff;
+  --text-main: #222222;
+  --text-muted: #666666;
+  --border: #e0e0e0;
+  
+  --accent-yellow: #FDBE49;
+  --accent-yellow-hover: #e5a732;
+  --dark-banner: #383838;
+  --card-gray: #e2e8f0;
+  
+  --danger-red: #ff4d4d;
+  --success-green: #10b981;
+  --warning-gold: #FDBE49;
+  
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+
+/* CUSTOM FIGMA FONTS */
+@font-face {
+  font-family: 'Roca Two Black';
+  src: url('../fonts/Roca Two Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Onest', sans-serif !important;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ALL HEADINGS USE ROCA TWO BLACK (WEIGHT 900) */
+h1, h2, h3, .onboarding-h1, .page-header, .page-header span:first-child, .brand-title, .modal-title, .shift-title {
+  font-family: 'Roca Two Black', serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.01em;
+}
+
+/* ONEST FOR ALL BUTTONS, LABELS, INPUTS & BADGES */
+button, input, select, textarea, label, .btn-gold, .btn-gray, .btn-red, .filter-tab, .nav-tab, .badge-pill, .prod-label-banner {
+  font-family: 'Onest', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* FONTAWESOME ICON FIX */
+.fa-solid, .fas {
+  font-weight: 900 !important;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* MOBILE FRAME (FIGMA EMBED SIZE) */
+.mobile-frame {
+  width: 390px;
+  height: 844px;
+  background: var(--app-bg);
+  border-radius: 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* MAIN VIEWPORT */
+.app-viewport {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 85px 16px;
+  position: relative;
+  background: #ffffff;
+}
+
+.page-section {
+  display: none;
+}
+
+.page-section.active {
+  display: block;
+}
+
+/* COMMON HEADINGS */
+h2.page-header {
+  font-family: 'Roca Two Black', serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-btn-trash {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+/* INPUTS & BUTTONS (FIGMA MATCH) */
+.search-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  outline: none;
+}
+
+.select-dropdown {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: #fff;
+  outline: none;
+  margin-bottom: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+}
+
+.btn-gold {
+  width: 100%;
+  padding: 13px;
+  background: var(--accent-yellow);
+  color: #222;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(253, 190, 73, 0.3);
+  transition: all 0.15s ease;
+  margin-bottom: 8px;
+}
+
+.btn-gold:active {
+  transform: scale(0.98);
+  background: var(--accent-yellow-hover);
+}
+
+.btn-circle-badge {
+  background: #ffffff;
+  color: #111111;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800 !important;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.btn-gray {
+  width: 100%;
+  padding: 13px;
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.btn-red {
+  width: 100%;
+  padding: 13px;
+  background: var(--danger-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+/* SEGMENTED FILTER TABS */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.filter-tab {
+  flex: 1;
+  padding: 8px 4px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.filter-tab.active {
+  background: #222;
+  color: #fff;
+}
+
+/* PRODUCT GRID (3 COLUMNS - FIGMA MATCH) */
+.product-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.figma-prod-card {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #f1f5f9;
+}
+
+.figma-prod-card:active {
+  transform: scale(0.96);
+}
+
+.prod-thumb {
+  width: 100%;
+  height: 90px;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.prod-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prod-label-banner {
+  background: var(--dark-banner);
+  color: #fff;
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FAB BUTTON */
+.fab-add-btn {
+  position: absolute;
+  bottom: 80px;
+  right: 16px;
+  background: var(--accent-yellow);
+  color: #222;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 15;
+}
+
+/* BOTTOM NAV BAR (FIGMA MATCH) */
+.bottom-nav {
+  height: 68px;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+}
+
+.nav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+  padding: 6px 0;
+}
+
+.nav-tab i, .nav-tab svg {
+  font-size: 1.2rem;
+}
+
+.nav-tab .vuesax-bold { display: none; }
+.nav-tab .vuesax-linear { display: block; }
+
+.nav-tab.active {
+  color: #111;
+  font-weight: 700;
+}
+
+.nav-tab.active i {
+  color: #111;
+}
+
+.nav-tab.active .vuesax-bold { display: block; color: #111; }
+.nav-tab.active .vuesax-linear { display: none; }
+
+/* ITEM CARDS & LISTS */
+.list-card {
+  background: #ffffff;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.badge-yellow { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.badge-green { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.badge-red { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* SHIFT CLOSED VIEW */
+.shift-closed-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.shift-closed-box i {
+  font-size: 3.5rem;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+/* MODAL OVERLAYS (FULL SCREEN ABOVE BOTTOM NAV) */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 68px;
+  width: 100%;
+  height: calc(100% - 68px);
+  background: #ffffff;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  padding: 20px 18px 30px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal-title {
+  font-family:'Roca Two Black', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.exit-btn {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* IMAGE UPLOAD BOX */
+.img-upload-box {
+  width: 140px;
+  height: 140px;
+  background: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 16px auto;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* CALENDAR COMPONENT */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
+.calendar-day-header {
+  font-weight: 700;
+  color: #94a3b8;
+  padding: 6px 0;
+}
+
+.calendar-day {
+  padding: 10px 0;
+  border-radius: 8px;
+  color: #334155;
+  cursor: pointer;
+}
+
+.calendar-day.active {
+  background: var(--accent-yellow);
+  font-weight: 700;
+  color: #111;
+}
