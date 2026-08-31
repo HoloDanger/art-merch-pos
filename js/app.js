@@ -1,4 +1,9 @@
-// ================= INITIALIZATION & APPLICATION LOGIC =================
+/**
+ * @file app.js
+ * @description Main application controller, tab navigation, modal handlers, Event Prep checklist, Trash Bin, and Chart.js analytics.
+ */
+
+// ================= INITIALIZATION =================
 window.addEventListener('DOMContentLoaded', () => {
   refreshCategoryDropdowns();
   renderPosProducts();
@@ -11,7 +16,13 @@ window.addEventListener('DOMContentLoaded', () => {
   updateCartBadgeAndTotalSalesCount();
 });
 
-// ================= NAVIGATION & MODALS =================
+// ================= NAVIGATION & MODAL HELPERS =================
+
+/**
+ * Switches the active section tab in the bottom navigation bar.
+ * @param {string} tabId - Target tab identifier ('pos', 'inventory', 'events', 'sales', 'settings')
+ * @param {HTMLElement} [el] - Triggering navigation element
+ */
 function switchTab(tabId, el) {
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -20,12 +31,18 @@ function switchTab(tabId, el) {
   if (el) el.classList.add('active');
 }
 
+/**
+ * Closes an active modal by element ID.
+ * @param {string} id - Modal element ID
+ */
 function closeModal(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('active');
 }
 
-// ================= EVENT PREP LOGIC =================
+// ================= EVENT PREP CHECKLIST LOGIC =================
+
+/** Renders the Event Preparation checklist tasks */
 function renderTasks() {
   const container = document.getElementById('tasks-list');
   if (!container) return;
@@ -43,12 +60,14 @@ function renderTasks() {
   `).join('');
 }
 
+/** Toggles task completion state */
 function toggleTaskDone(id) {
   const t = tasks.find(x => x.id === id);
   if (t) t.done = !t.done;
   renderTasks();
 }
 
+/** Moves task to Trash Bin */
 function deleteTask(id) {
   const t = tasks.find(x => x.id === id);
   if (t && confirm(`Move task "${t.name}" to trash?`)) {
@@ -58,8 +77,10 @@ function deleteTask(id) {
   }
 }
 
+/** Opens Add Task modal */
 function openAddTaskModal() { document.getElementById('modal-add-task').classList.add('active'); }
 
+/** Saves a new event preparation task */
 function saveNewTask() {
   const name = document.getElementById('new-task-name').value.trim();
   const type = document.getElementById('new-task-type').value;
@@ -72,9 +93,12 @@ function saveNewTask() {
   document.getElementById('new-task-name').value = '';
 }
 
+/** Opens Calendar modal */
 function openCalendarModal() { document.getElementById('modal-calendar').classList.add('active'); }
 
-// ================= SALES REPORT LOGIC =================
+// ================= SALES REPORT & ANALYTICS =================
+
+/** Renders past sales shift records list */
 function renderSalesShifts() {
   const container = document.getElementById('sales-shifts-list');
   if (!container) return;
@@ -96,6 +120,7 @@ function renderSalesShifts() {
   `;
 }
 
+/** Initializes Chart.js gross revenue visualizer */
 function initSalesChart() {
   const ctx = document.getElementById('salesChart');
   if (!ctx) return;
@@ -120,6 +145,7 @@ function initSalesChart() {
   });
 }
 
+/** Updates chart timeframe dataset (Monthly vs Yearly) */
 function updateSalesChartPeriod(val) {
   if (!salesChartInstance) return;
   if (val.includes('year')) {
@@ -132,11 +158,16 @@ function updateSalesChartPeriod(val) {
   salesChartInstance.update();
 }
 
-// ================= TRASH BIN LOGIC =================
+// ================= TRASH BIN & SOFT DELETE RECOVERY =================
+
 function openInventoryTrashModal() { openTrashModal('Inventory'); }
 function openSalesTrashModal() { openTrashModal('Sales Report'); }
 function openTaskTrashModal() { openTrashModal('Event Prep'); }
 
+/**
+ * Opens Trash Bin modal and lists soft-deleted items.
+ * @param {string} [source] - Context section tag
+ */
 function openTrashModal(source = 'All') {
   const container = document.getElementById('trash-items-container');
   if (!container) return;
@@ -159,12 +190,14 @@ function openTrashModal(source = 'All') {
   document.getElementById('modal-trash').classList.add('active');
 }
 
+/** Restores item from Trash Bin */
 function restoreTrashItem(idx) {
   alert(`Restored ${trashBin[idx].name}!`);
   trashBin.splice(idx, 1);
   openTrashModal();
 }
 
+/** Permanently deletes item from Trash Bin */
 function permanentlyDeleteTrashItem(idx) {
   if (confirm(`Permanently delete "${trashBin[idx].name}" from trash? This action cannot be undone.`)) {
     trashBin.splice(idx, 1);
@@ -172,6 +205,7 @@ function permanentlyDeleteTrashItem(idx) {
   }
 }
 
+/** Empties entire Trash Bin queue */
 function emptyAllTrash() {
   if (trashBin.length === 0) {
     alert('Trash is already empty!');
@@ -184,6 +218,8 @@ function emptyAllTrash() {
 }
 
 // ================= INTEGRATIONS & ONBOARDING =================
+
+/** Opens Spreadsheet Integration modal */
 function openSpreadsheetIntegrationModal() {
   const container = document.getElementById('integrations-list-content');
   if (!container) return;
@@ -196,6 +232,7 @@ function openSpreadsheetIntegrationModal() {
   document.getElementById('modal-integrations').classList.add('active');
 }
 
+/** Opens E-commerce Sales Integration modal */
 function openEcomIntegrationModal() {
   const container = document.getElementById('integrations-list-content');
   if (!container) return;
@@ -208,11 +245,13 @@ function openEcomIntegrationModal() {
   document.getElementById('modal-integrations').classList.add('active');
 }
 
+/** Opens Onboarding Flow modal */
 function openOnboardingModal() {
   renderOnboardingStep(1);
   document.getElementById('modal-onboarding').classList.add('active');
 }
 
+/** Renders specified step in Onboarding Flow */
 function renderOnboardingStep(step) {
   const title = document.getElementById('onboarding-step-title');
   const content = document.getElementById('onboarding-step-content');
@@ -277,6 +316,7 @@ function renderOnboardingStep(step) {
   }
 }
 
+/** Settings sub-page action dispatcher */
 function openSettingsSubpage(sub) {
   if (sub === 'account') alert('Account Management Settings');
   else if (sub === 'integrations') openSpreadsheetIntegrationModal();

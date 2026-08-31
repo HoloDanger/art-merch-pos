@@ -1,4 +1,12 @@
-// ================= INVENTORY & CATEGORY MANAGEMENT =================
+/**
+ * @file inventory.js
+ * @description Inventory sub-tab dropdown navigation, Product CRUD operations, Discount rules, and Category management.
+ */
+
+/**
+ * Switches the visible sub-tab in the Inventory section via select dropdown.
+ * @param {string} val - Selected view ('products', 'discounts', or 'categories')
+ */
 function switchInventorySubtabDropdown(val) {
   document.getElementById('inv-sub-products').style.display = val === 'products' ? 'block' : 'none';
   document.getElementById('inv-sub-discounts').style.display = val === 'discounts' ? 'block' : 'none';
@@ -7,21 +15,21 @@ function switchInventorySubtabDropdown(val) {
   if (val === 'categories') renderCategories();
 }
 
+/**
+ * Renders the product grid inside the Inventory tab, applying search and category filters.
+ */
 function renderInventoryProducts() {
   const grid = document.getElementById('inv-product-grid');
   if (!grid) return;
-  grid.innerHTML = products.map(p => `
-    <div class="figma-prod-card" onclick="openEditProductModal(${p.id})">
-      <div class="prod-thumb"><img src="${p.img}" alt="${p.name}"></div>
-      <div class="prod-label-banner">${p.name}</div>
-    </div>
-  `).join('');
-}
+  const searchVal = (document.getElementById('inv-search-input')?.value || '').toLowerCase();
+  const catVal = document.getElementById('inv-prod-cat-filter')?.value || 'all';
 
-function filterInventoryProducts(val) {
-  const grid = document.getElementById('inv-product-grid');
-  if (!grid) return;
-  let filtered = products.filter(p => p.name.toLowerCase().includes(val.toLowerCase()));
+  let filtered = products.filter(p => {
+    const matchQ = p.name.toLowerCase().includes(searchVal);
+    const matchCat = (catVal === 'all') || (p.category.toLowerCase() === catVal.toLowerCase());
+    return matchQ && matchCat;
+  });
+
   grid.innerHTML = filtered.map(p => `
     <div class="figma-prod-card" onclick="openEditProductModal(${p.id})">
       <div class="prod-thumb"><img src="${p.img}" alt="${p.name}"></div>
@@ -30,9 +38,46 @@ function filterInventoryProducts(val) {
   `).join('');
 }
 
+/**
+ * Filters the product grid inside the Inventory tab by name and category.
+ * @param {string} [val] - Optional search query string
+ */
+function filterInventoryProducts(val) {
+  renderInventoryProducts();
+}
+
+/**
+ * Handles live image file uploads via FileReader API.
+ * @param {Event} event - File input change event
+ */
+function handleProductImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    uploadedImageDataUrl = e.target.result;
+    
+    // Update preview in edit modal or add box
+    const editImg = document.getElementById('edit-prod-img');
+    if (editImg) editImg.src = uploadedImageDataUrl;
+
+    const addImgBox = document.getElementById('add-img-preview-box');
+    if (addImgBox) {
+      addImgBox.innerHTML = `<img src="${uploadedImageDataUrl}" alt="Uploaded Image" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">`;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+/**
+ * Opens the Product Details modal for editing an existing product.
+ * @param {number} id - Product ID
+ */
 function openEditProductModal(id) {
   const prod = products.find(p => p.id === id);
   if (!prod) return;
+  uploadedImageDataUrl = null;
   document.getElementById('edit-prod-id').value = prod.id;
   document.getElementById('edit-prod-name').value = prod.name;
   document.getElementById('edit-prod-cat').value = prod.category;
@@ -42,6 +87,9 @@ function openEditProductModal(id) {
   document.getElementById('modal-edit-product').classList.add('active');
 }
 
+/**
+ * Saves edited product details back to the products catalog.
+ */
 function saveEditedProduct() {
   const id = parseInt(document.getElementById('edit-prod-id').value);
   const prod = products.find(p => p.id === id);
@@ -50,6 +98,8 @@ function saveEditedProduct() {
     prod.category = document.getElementById('edit-prod-cat').value;
     prod.price = parseFloat(document.getElementById('edit-prod-price').value || prod.price);
     prod.cost = parseFloat(document.getElementById('edit-prod-cost').value || prod.cost);
+    if (uploadedImageDataUrl) prod.img = uploadedImageDataUrl;
+
     renderInventoryProducts();
     renderPosProducts();
     closeModal('modal-edit-product');
@@ -57,12 +107,18 @@ function saveEditedProduct() {
   }
 }
 
+/**
+ * Confirms and executes soft deletion of currently edited product.
+ */
 function confirmDeleteCurrentProduct() {
   const id = parseInt(document.getElementById('edit-prod-id').value);
   closeModal('modal-edit-product');
   deleteInventoryItem('product', id);
 }
 
+/**
+ * Renders the configured discounts list in the Inventory tab.
+ */
 function renderDiscounts() {
   const container = document.getElementById('discounts-list');
   if (!container) return;
@@ -80,6 +136,9 @@ function renderDiscounts() {
   `).join('');
 }
 
+/**
+ * Renders the categories list in the Inventory tab.
+ */
 function renderCategories() {
   const container = document.getElementById('categories-list');
   if (!container) return;
@@ -91,6 +150,11 @@ function renderCategories() {
   `).join('');
 }
 
+/**
+ * Soft-deletes a product, discount, or category item into the Trash Bin.
+ * @param {'product'|'discount'|'category'} type - Item type
+ * @param {number} id - Item ID or array index
+ */
 function deleteInventoryItem(type, id) {
   if (confirm(`Are you sure you want to delete this ${type}? It will be moved to the trash bin.`)) {
     if (type === 'product') {
@@ -113,8 +177,12 @@ function deleteInventoryItem(type, id) {
   }
 }
 
+/**
+ * Synchronizes category option elements across POS, Inventory filter, and Modal select dropdowns.
+ */
 function refreshCategoryDropdowns() {
   const posCatSelect = document.getElementById('pos-cat-dropdown');
+  const invCatSelect = document.getElementById('inv-prod-cat-filter');
   const addProdCatSelect = document.getElementById('new-prod-cat');
   const editProdCatSelect = document.getElementById('edit-prod-cat');
 
@@ -123,6 +191,13 @@ function refreshCategoryDropdowns() {
     posCatSelect.innerHTML = `<option value="all">Category: All Merch</option>` + 
       categories.map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
     posCatSelect.value = currentVal;
+  }
+
+  if (invCatSelect) {
+    const currentVal = invCatSelect.value;
+    invCatSelect.innerHTML = `<option value="all">Category: All Merch</option>` + 
+      categories.map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
+    invCatSelect.value = currentVal;
   }
 
   if (addProdCatSelect) {
@@ -134,26 +209,43 @@ function refreshCategoryDropdowns() {
   }
 }
 
+/** Opens Add Product modal */
 function openAddProductModal() { 
+  uploadedImageDataUrl = null;
+  const addImgBox = document.getElementById('add-img-preview-box');
+  if (addImgBox) {
+    addImgBox.innerHTML = `<i class="fa-solid fa-image" style="font-size:1.8rem; color:#94a3b8;"></i><span>Add Photo</span>`;
+  }
   refreshCategoryDropdowns();
   document.getElementById('modal-add-product').classList.add('active'); 
 }
 
+/** Opens Add Discount modal */
 function openAddDiscountModal() { document.getElementById('modal-add-discount').classList.add('active'); }
+
+/** Opens Add Category modal */
 function openAddCategoryModal() { document.getElementById('modal-add-category').classList.add('active'); }
 
+/**
+ * Saves a new product entry to the catalog.
+ */
 function saveNewProduct() {
   const name = document.getElementById('new-prod-name').value;
   const cat = document.getElementById('new-prod-cat').value;
   const price = parseFloat(document.getElementById('new-prod-price').value || 100);
   if (!name) { alert('Please enter product name'); return; }
 
-  products.push({ id: Date.now(), name, category: cat, price, cost: 30, stock: 50, sold: 0, img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60' });
+  const defaultImg = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60';
+  products.push({ id: Date.now(), name, category: cat, price, cost: 30, stock: 50, sold: 0, img: uploadedImageDataUrl || defaultImg });
   renderInventoryProducts();
   renderPosProducts();
   closeModal('modal-add-product');
+  document.getElementById('new-prod-name').value = '';
 }
 
+/**
+ * Dynamic input handler locking value to "100% Off" when Freebie discount type is selected.
+ */
 function handleDiscountCategoryChange() {
   const cat = document.getElementById('new-disc-cat').value;
   const valInput = document.getElementById('new-disc-val');
@@ -168,6 +260,9 @@ function handleDiscountCategoryChange() {
   }
 }
 
+/**
+ * Formats and saves a new discount rule entry.
+ */
 function saveNewDiscount() {
   const name = document.getElementById('new-disc-name').value.trim();
   const cat = document.getElementById('new-disc-cat').value;
@@ -192,6 +287,9 @@ function saveNewDiscount() {
   document.getElementById('new-disc-val').readOnly = false;
 }
 
+/**
+ * Saves a new product category tag.
+ */
 function saveNewCategory() {
   const name = document.getElementById('new-cat-name').value.trim();
   if (!name) { alert('Please enter category name'); return; }

@@ -34,14 +34,14 @@
           <div style="display:flex; align-items:center; gap:8px;">
             <button class="icon-btn-trash" onclick="openTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif;">Trash</span>
+              <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
             </button>
           </div>
         </h2>
 
-        <!-- SHIFT CLOSED VIEW -->
+        <!-- SHIFT CLOSED VIEW (FIGMA MOCKUP ICON MATCH) -->
         <div id="pos-shift-closed-view" class="shift-closed-box" style="display:none;">
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" style="margin-bottom:16px;"><path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#222" stroke-width="1.8"/><path d="M15.71 15.18L12.61 13.33C12.07 13.01 11.63 12.24 11.63 11.61V7.51001" stroke="#222" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" style="margin-bottom:14px;"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.8"/><path d="M12 7V12L15 15" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <h3 style="font-family:'Roca Two Black', serif; font-size:1.6rem; font-weight:800; margin-bottom:6px;">Shift is closed</h3>
           <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:24px;">Start shift to begin taking orders!</p>
           <button class="btn-gold" style="width:180px;" onclick="openStartShiftModal()">Start Shift</button>
@@ -85,12 +85,12 @@
           <span>Inventory</span>
           <button class="icon-btn-trash" onclick="openInventoryTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif;">Trash</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
           </button>
         </h2>
 
         <div class="search-wrapper">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <input type="text" class="search-box" id="inv-search-input" placeholder="Search" onkeyup="filterInventoryProducts(this.value)">
         </div>
 
@@ -102,6 +102,11 @@
 
         <!-- INVENTORY SUBTAB 1: PRODUCTS -->
         <div id="inv-sub-products">
+          <!-- INVENTORY PRODUCT CATEGORY DROPDOWN (TICKET 3) -->
+          <select class="select-dropdown" id="inv-prod-cat-filter" onchange="filterInventoryProducts()" style="margin-bottom:12px; font-weight:600;">
+            <option value="all">Category: All Merch</option>
+          </select>
+
           <div class="product-grid-3col" id="inv-product-grid">
             <!-- Rendered by JS -->
           </div>
@@ -131,7 +136,7 @@
           <span>Event Preparation</span>
           <button class="icon-btn-trash" onclick="openTaskTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif;">Trash</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
           </button>
         </h2>
 
@@ -162,7 +167,7 @@
           <span>Sales Report</span>
           <button class="icon-btn-trash" onclick="openSalesTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif;">Trash</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
           </button>
         </h2>
 
@@ -244,12 +249,15 @@
 
   <!-- ================= ALL DYNAMIC MODALS ================= -->
 
+  <!-- HIDDEN FILE INPUT FOR FUNCTIONAL IMAGE UPLOADS (TICKET 7) -->
+  <input type="file" id="product-img-file-input" accept="image/*" style="display:none;" onchange="handleProductImageUpload(event)">
+
   <!-- MODAL: ONBOARDING FLOW -->
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title" id="onboarding-step-title">Welcome</span>
-        <button class="exit-btn" onclick="closeModal('modal-onboarding')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-onboarding')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <div id="onboarding-step-content">
         <!-- Rendered dynamically -->
@@ -262,7 +270,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Start Shift</span>
-        <button class="exit-btn" onclick="closeModal('modal-start-shift')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-start-shift')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Starting Cash Amount (₱)</label>
       <input type="number" class="form-control" id="start-cash-input" value="0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:16px;">
@@ -275,7 +283,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title" id="receipt-modal-title">Current Order Receipt</span>
-        <button class="exit-btn" onclick="closeModal('modal-cart-receipt')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-cart-receipt')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div id="cart-items-container" style="max-height:220px; overflow-y:auto; margin-bottom:12px;">
@@ -305,21 +313,22 @@
     </div>
   </div>
 
-  <!-- MODAL: TOTAL SALES / SHIFT SUMMARY -->
+  <!-- MODAL: TOTAL SALES / SHIFT SUMMARY (TICKET 4 TIGHT SPACING MATCH) -->
   <div class="modal-overlay" id="modal-total-sales">
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Shift Name</span>
-        <button class="exit-btn" onclick="closeModal('modal-total-sales')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-total-sales')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Shift Opened: August 5, 2026, 4:29 PM</div>
+      <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Shift Opened: August 5, 2026, 4:29 PM</div>
       
-      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:12px; font-size:0.9rem;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Starting Cash</span><span>₱0.00</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Gross Sales</span><span id="shift-summary-gross">₱1,115.00</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Cash Refunds</span><span>₱0.00</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Discounts</span><span>₱50.00</span></div>
-        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.1rem; border-top:1px solid #cbd5e1; padding-top:6px;">
+      <!-- SHIFT REVIEW SUMMARY BOX WITH FIGMA PROTOTYPE SPACING -->
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin-bottom:10px; font-size:0.88rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Starting Cash</span><span>₱0.00</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Gross Sales</span><span id="shift-summary-gross">₱1,115.00</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Cash Refunds</span><span>₱0.00</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Discounts</span><span>₱50.00</span></div>
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.05rem; border-top:1px solid #cbd5e1; padding-top:4px;">
           <span style="font-weight:600;">Net Sales</span><span class="net-sales-amount" style="color:#10b981; font-weight:600;" id="shift-summary-net">₱1,065.00</span>
         </div>
       </div>
@@ -327,11 +336,36 @@
       <button class="btn-gold" onclick="openProductTallyModal()" style="margin-bottom:8px;">See Product Tally</button>
       <button class="btn-gray" onclick="confirmEndShift()" style="margin-bottom:12px;">End Shift</button>
 
-      <!-- SHIFT SUMMARY RECEIPT HISTORY LIST (FIGMA MATCH) -->
+      <!-- SHIFT SUMMARY RECEIPT HISTORY LIST -->
       <h3 style="font-family:'Roca Two Black', serif; font-size:1.05rem; font-weight:800; margin:4px 0 8px 0;">Receipt History</h3>
       <div id="shift-receipts-list" style="flex:1; min-height:180px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-bottom:20px;">
         <!-- Rendered dynamically by JS -->
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RECEIPT DETAILS & REFUND (TICKET 1) -->
+  <div class="modal-overlay" id="modal-receipt-detail">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="modal-title" id="receipt-detail-id">Receipt Details</span>
+        <button class="exit-btn" onclick="closeModal('modal-receipt-detail')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+      </div>
+
+      <div id="receipt-detail-meta" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;"></div>
+
+      <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:6px;">Purchased Items</h4>
+      <div id="receipt-detail-items" style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:10px; margin-bottom:12px;">
+        <!-- Injected by JS -->
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <span style="font-weight:700; font-size:1rem;">Total Amount</span>
+        <span style="font-weight:800; font-size:1.2rem;" id="receipt-detail-total">₱0.00</span>
+      </div>
+
+      <button class="btn-red" id="receipt-refund-btn">Refund Transaction</button>
+      <button class="btn-gray" onclick="closeModal('modal-receipt-detail')">Close</button>
     </div>
   </div>
 
@@ -340,7 +374,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Shift Product Tally</span>
-        <button class="exit-btn" onclick="closeModal('modal-product-tally')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-product-tally')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div class="search-wrapper">
@@ -367,11 +401,11 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Product Details</span>
-        <button class="exit-btn" onclick="closeModal('modal-edit-product')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-edit-product')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       
       <input type="hidden" id="edit-prod-id">
-      <div class="img-upload-box">
+      <div class="img-upload-box" onclick="document.getElementById('product-img-file-input').click()">
         <img id="edit-prod-img" src="" alt="Product Image" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
       </div>
 
@@ -399,15 +433,15 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD PRODUCT -->
+  <!-- MODAL: ADD PRODUCT (TICKET 7 FUNCTIONAL IMAGE UPLOAD) -->
   <div class="modal-overlay" id="modal-add-product">
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Add Product</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-product')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-add-product')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
-      <div class="img-upload-box" onclick="alert('Photo Picker Triggered!')">
+      <div class="img-upload-box" id="add-img-preview-box" onclick="document.getElementById('product-img-file-input').click()">
         <i class="fa-solid fa-image" style="font-size:1.8rem; color:#94a3b8;"></i>
         <span>Add Photo</span>
       </div>
@@ -433,7 +467,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Add Discount</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-discount')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-add-discount')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <input type="text" class="form-control" id="new-disc-name" placeholder="Discount Name (e.g. Student Discount)" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px;">
@@ -456,7 +490,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Add Category</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-category')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-add-category')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <input type="text" class="form-control" id="new-cat-name" placeholder="Category Name" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:16px;">
       <button class="btn-gold" onclick="saveNewCategory()">Confirm</button>
@@ -469,7 +503,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title">Add New Task</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-task')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-add-task')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div class="img-upload-box" style="height:90px;" onclick="alert('Icon selector opened!')">
@@ -517,8 +551,8 @@
       <div class="modal-header">
         <span class="modal-title">Trash Bin</span>
         <div>
-          <button class="exit-btn" style="color:var(--danger-red); margin-right:10px;" onclick="emptyAllTrash()"><i class="fa-solid fa-trash-can"></i> Delete All</button>
-          <button class="exit-btn" onclick="closeModal('modal-trash')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+          <button class="exit-btn" style="color:var(--danger-red); margin-right:10px; display:inline-flex; flex-direction:column; align-items:center;" onclick="emptyAllTrash()"><i class="fa-solid fa-trash-can"></i> Delete All</button>
+          <button class="exit-btn" onclick="closeModal('modal-trash')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
         </div>
       </div>
       <div id="trash-items-container">
@@ -532,7 +566,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <span class="modal-title" id="integration-modal-title">App Integrations</span>
-        <button class="exit-btn" onclick="closeModal('modal-integrations')"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-integrations')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <div id="integrations-list-content">
         <!-- Rendered by JS -->
