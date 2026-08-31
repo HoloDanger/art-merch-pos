@@ -19,15 +19,24 @@ window.addEventListener('DOMContentLoaded', () => {
 // ================= NAVIGATION & MODAL HELPERS =================
 
 /**
+ * Closes all open modal overlays across the application.
+ */
+function closeAllModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+}
+
+/**
  * Switches the active section tab in the bottom navigation bar.
  * @param {string} tabId - Target tab identifier ('pos', 'inventory', 'events', 'sales', 'settings')
  * @param {HTMLElement} [el] - Triggering navigation element
  */
 function switchTab(tabId, el) {
+  closeAllModals();
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
 
-  document.getElementById(`sec-${tabId}`).classList.add('active');
+  const sec = document.getElementById(`sec-${tabId}`);
+  if (sec) sec.classList.add('active');
   if (el) el.classList.add('active');
 }
 
@@ -172,17 +181,35 @@ function openTrashModal(source = 'All') {
   const container = document.getElementById('trash-items-container');
   if (!container) return;
   if (trashBin.length === 0) {
-    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding:20px 0;">Trash bin is empty.</p>`;
+    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem; padding:20px 0;">Trash is empty.</p>`;
   } else {
     container.innerHTML = trashBin.map((item, i) => `
-      <div class="list-card">
+      <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px; margin-bottom:8px;">
         <div>
-          <div style="font-weight:700;">${item.name}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${item.type}</div>
+          <div style="font-weight:700; font-size:0.92rem;">${item.name}</div>
+          <div style="font-size:0.78rem; color:var(--text-muted);">${item.datetime || item.info || 'Aug. 9, 2026 | 4:29 PM'}</div>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn-gold" style="width:auto; padding:4px 10px; font-size:0.75rem; margin:0;" onclick="restoreTrashItem(${i})">Restore</button>
-          <span style="color:var(--danger-red); cursor:pointer; display:inline-flex; align-items:center;" title="Delete Permanently" onclick="permanentlyDeleteTrashItem(${i})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-weight:400; font-size:0.95rem; color:#111111;">${item.price || '₱12,400.00'}</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <!-- Yellow Restore Button (#FDBE49 background with black icon) -->
+            <button onclick="restoreTrashItem(${i})" style="background:#FDBE49; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Restore Shift">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="1.8"/>
+                <path d="M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C13.8 16 15.31 14.81 15.8 13.18" stroke="#000000" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M8 9.5V12H10.5" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <!-- Red Delete Button (#F93C3C background with white icon) -->
+            <button onclick="permanentlyDeleteTrashItem(${i})" style="background:#F93C3C; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;" title="Delete Permanently">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     `).join('');
@@ -219,15 +246,33 @@ function emptyAllTrash() {
 
 // ================= INTEGRATIONS & ONBOARDING =================
 
-/** Opens Spreadsheet Integration modal */
+/** Opens Spreadsheet & App Integration modal */
 function openSpreadsheetIntegrationModal() {
   const container = document.getElementById('integrations-list-content');
   if (!container) return;
-  document.getElementById('integration-modal-title').innerText = 'Import Spreadsheet';
+  document.getElementById('integration-modal-title').innerText = 'App Integrations';
   container.innerHTML = `
-    <div class="list-card"><span><i class="fa-solid fa-table" style="color:#10b981;"></i> Google Sheets</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
-    <div class="list-card"><span><i class="fa-solid fa-file-excel" style="color:#059669;"></i> Microsoft Excel</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
-    <div class="list-card"><span><i class="fa-solid fa-cube"></i> Notion</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#10b981"/><path d="M7 8H17M7 12H17M7 16H17M11 8V16" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span style="font-weight:700;">Google Sheets</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#059669"/><path d="M8 8L16 16M16 8L8 16" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg>
+        <span style="font-weight:700;">Microsoft Excel</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#1e293b"/><path d="M8 7V17L12 11V17L16 7" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-weight:700;">Notion</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
   `;
   document.getElementById('modal-integrations').classList.add('active');
 }
@@ -236,11 +281,29 @@ function openSpreadsheetIntegrationModal() {
 function openEcomIntegrationModal() {
   const container = document.getElementById('integrations-list-content');
   if (!container) return;
-  document.getElementById('integration-modal-title').innerText = 'Connect Your Sales';
+  document.getElementById('integration-modal-title').innerText = 'App Integrations';
   container.innerHTML = `
-    <div class="list-card"><span><i class="fa-solid fa-store" style="color:#f59e0b;"></i> Shopee</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
-    <div class="list-card"><span><i class="fa-solid fa-shop" style="color:#06b6d4;"></i> Lazada</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
-    <div class="list-card"><span><i class="fa-solid fa-bag-shopping" style="color:#95bf47;"></i> Shopify</span><button class="btn-gold" style="width:auto; padding:6px 12px; margin:0;" onclick="alert('Connected!')">Connect</button></div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#ea580c"/><path d="M6 9H18L17 19H7L6 9ZM9 9V7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7V9" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span style="font-weight:700;">Shopee</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#0284c7"/><path d="M12 7L16 11L12 15L8 11L12 7Z" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span style="font-weight:700;">Lazada</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
+    <div class="list-card" style="display:flex; align-items:center; justify-content:space-between; padding:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#70b43c"/><path d="M8 9L10 6L14 6L16 9M6 9H18L17 19H7L6 9Z" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-weight:700;">Shopify</span>
+      </div>
+      <button class="btn-gold" style="width:auto; padding:6px 14px; margin:0;" onclick="alert('Connected!')">Connect</button>
+    </div>
   `;
   document.getElementById('modal-integrations').classList.add('active');
 }

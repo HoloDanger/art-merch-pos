@@ -29,7 +29,9 @@ function renderPosProducts() {
 
   let filtered = products.filter(p => {
     const matchQ = p.name.toLowerCase().includes(query);
-    const matchCat = cat === 'all' || p.category === cat;
+    const pCat = (p.category || '').toLowerCase();
+    const cVal = (cat || '').toLowerCase();
+    const matchCat = (cVal === 'all') || (pCat === cVal) || (pCat.includes(cVal) || cVal.includes(pCat));
     return matchQ && matchCat;
   });
 
@@ -117,9 +119,11 @@ function renderCartTotals() {
         <div style="font-size:0.8rem; color:var(--text-muted);">₱${i.price}.00 | ${i.category}</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
-        <button style="border:none; background:#f1f5f9; color:#000000; padding:4px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="updateCartQty(${i.id}, -1)">-</button>
-        <span style="font-weight:700; color:#000000;">${i.qty}</span>
-        <button style="border:none; background:var(--accent-yellow); color:#000000; padding:4px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="updateCartQty(${i.id}, 1)">+</button>
+        <button style="border:1px solid #cbd5e1; background:#ffffff; color:#475569; width:28px; height:28px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;" onclick="updateCartQty(${i.id}, -1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span style="font-weight:700; color:#334155; min-width:16px; text-align:center;">${i.qty}</span>
+        <button style="border:1px solid #cbd5e1; background:#ffffff; color:#475569; width:28px; height:28px; border-radius:8px; font-weight:700; font-size:0.95rem; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;" onclick="updateCartQty(${i.id}, 1)">+</button>
       </div>
     </div>
   `).join('');

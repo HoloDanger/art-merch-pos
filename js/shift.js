@@ -70,16 +70,10 @@ function openReceiptDetailModal(id) {
 
   const refundBtn = document.getElementById('receipt-refund-btn');
   if (refundBtn) {
-    if (receipt.refunded) {
-      refundBtn.innerText = 'Already Refunded';
-      refundBtn.disabled = true;
-      refundBtn.style.opacity = '0.5';
-    } else {
-      refundBtn.innerText = 'Refund Transaction';
-      refundBtn.disabled = false;
-      refundBtn.style.opacity = '1';
-      refundBtn.onclick = () => refundReceipt(receipt.id);
-    }
+    refundBtn.innerText = 'Refund Transaction (Upgrade Required)';
+    refundBtn.disabled = false;
+    refundBtn.style.opacity = '0.6';
+    refundBtn.onclick = () => refundReceipt(receipt.id);
   }
 
   document.getElementById('modal-receipt-detail').classList.add('active');
@@ -90,23 +84,7 @@ function openReceiptDetailModal(id) {
  * @param {string} id - Receipt ID
  */
 function refundReceipt(id) {
-  const receipt = shiftReceipts.find(r => r.id === id);
-  if (receipt && confirm(`Are you sure you want to refund Receipt #${receipt.id} for ₱${receipt.amount.toFixed(2)}?`)) {
-    receipt.refunded = true;
-
-    // Deduct sold quantities from catalog
-    if (receipt.items) {
-      receipt.items.forEach(item => {
-        const prod = products.find(p => p.name === item.name);
-        if (prod && prod.sold) prod.sold = Math.max(0, prod.sold - item.qty);
-      });
-    }
-
-    renderShiftReceiptsList();
-    renderPosProducts();
-    closeModal('modal-receipt-detail');
-    alert(`✅ Receipt #${receipt.id} has been refunded!`);
-  }
+  alert('🔒 Automated receipt refund processing and stock adjustment is a Premium Tier feature. Budget upgrade required to unlock refund management.');
 }
 
 /** Confirms ending of physical booth shift */

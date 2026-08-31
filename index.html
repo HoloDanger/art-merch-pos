@@ -19,29 +19,27 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <!-- Modular Design System Styles -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2.2">
 </head>
 <body>
 
   <div class="mobile-frame">
     <!-- MAIN VIEWPORT -->
-    <div class="app-viewport">
+    <div class="app-viewport" style="padding-top:54px !important;">
 
       <!-- ================= SECTION 1: POS PAGE ================= -->
       <section id="sec-pos" class="page-section active">
-        <h2 class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
-          <span class="brand-title" style="cursor:pointer;" onclick="openOnboardingModal()">MaArtsy</span>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button class="icon-btn-trash" onclick="openTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
-            </button>
-          </div>
-        </h2>
 
         <!-- SHIFT CLOSED VIEW (FIGMA MOCKUP ICON MATCH) -->
         <div id="pos-shift-closed-view" class="shift-closed-box" style="display:none;">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" style="margin-bottom:14px;"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.8"/><path d="M12 7V12L15 15" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="102" height="102" viewBox="0 0 24 24" fill="none" style="margin-bottom:18px;">
+            <path d="M8.00977 5.46C9.20977 4.85 10.5598 4.5 11.9998 4.5C16.8298 4.5 20.7498 8.42 20.7498 13.25" stroke="#111111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 22.0002C7.17 22.0002 3.25 18.0802 3.25 13.2502C3.25 11.2702 3.91 9.45023 5.01 7.99023" stroke="#111111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 8V13" stroke="#111111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 2H15" stroke="#111111" stroke-width="1.6" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M19 17V21" stroke="#111111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 17V21" stroke="#111111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
           <h3 style="font-family:'Roca Two Black', serif; font-size:1.6rem; font-weight:800; margin-bottom:6px;">Shift is closed</h3>
           <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:24px;">Start shift to begin taking orders!</p>
           <button class="btn-gold" style="width:180px;" onclick="openStartShiftModal()">Start Shift</button>
@@ -50,7 +48,7 @@
         <!-- SHIFT OPEN VIEW (MAIN POS INTERFACE) -->
         <div id="pos-shift-open-view">
           <div class="search-wrapper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11.5" cy="11.5" r="7.5" stroke="#94a3b8" stroke-width="1.8"/><path d="M17 17L21 21" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/></svg>
             <input type="text" class="search-box" id="pos-search" placeholder="Search" onkeyup="filterPosProducts()">
           </div>
 
@@ -81,16 +79,10 @@
 
       <!-- ================= SECTION 2: INVENTORY PAGE ================= -->
       <section id="sec-inventory" class="page-section">
-        <h2 class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Inventory</span>
-          <button class="icon-btn-trash" onclick="openInventoryTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
-          </button>
-        </h2>
+        <h2 class="page-header">Inventory</h2>
 
         <div class="search-wrapper">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11.5" cy="11.5" r="7.5" stroke="#94a3b8" stroke-width="1.8"/><path d="M17 17L21 21" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/></svg>
           <input type="text" class="search-box" id="inv-search-input" placeholder="Search" onkeyup="filterInventoryProducts(this.value)">
         </div>
 
@@ -132,13 +124,7 @@
 
       <!-- ================= SECTION 3: EVENT PREP PAGE ================= -->
       <section id="sec-events" class="page-section">
-        <h2 class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Event Preparation</span>
-          <button class="icon-btn-trash" onclick="openTaskTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
-          </button>
-        </h2>
+        <h2 class="page-header">Event Preparation</h2>
 
         <!-- CALENDAR BANNER -->
         <div class="list-card" style="background:#fff; border:1.5px solid var(--border); margin-bottom:16px;">
@@ -163,13 +149,13 @@
 
       <!-- ================= SECTION 4: SALES REPORT PAGE ================= -->
       <section id="sec-sales" class="page-section">
-        <h2 class="page-header" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Sales Report</span>
-          <button class="icon-btn-trash" onclick="openSalesTrashModal()" style="background:transparent; border:none; display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:0;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:600; font-family:'Onest', sans-serif; margin-top:2px;">Trash</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h2 class="page-header" style="margin:0;">Sales Report</h2>
+          <button onclick="openTrashModal()" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Trash Bin">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Trash</span>
           </button>
-        </h2>
+        </div>
 
         <!-- PERIOD SELECTOR -->
         <select class="select-dropdown" onchange="updateSalesChartPeriod(this.value)">
@@ -217,35 +203,33 @@
     </div>
 
     <!-- BOTTOM NAV BAR (FIGMA MATCH) -->
-    <nav class="bottom-nav">
-      <div class="nav-tab" onclick="switchTab('sales', this)">
+    <nav class="bottom-nav" style="display:flex; justify-content:space-around; align-items:center; width:100%; height:80px; padding-bottom:12px; padding-left:2px; padding-right:2px; box-sizing:border-box; position:absolute; bottom:0; left:0; right:0; background:#ffffff; border-top:1px solid var(--border); z-index:2000;">
+      <div class="nav-tab" onclick="switchTab('sales', this)" style="flex:1; min-width:0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 0;">
         <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M7 15L10.5 11.5L13.5 14.5L17 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 9H17V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="vuesax-icon vuesax-bold" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"/><path d="M7 15L10.5 11.5L13.5 14.5L17 9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 9H17V12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Sales Report</span>
+        <span style="font-size:0.58rem !important; font-weight:400 !important; text-align:center; display:block; width:100%; white-space:nowrap; letter-spacing:-0.04em;">Sales Report</span>
       </div>
-      <div class="nav-tab" onclick="switchTab('inventory', this)">
+      <div class="nav-tab" onclick="switchTab('inventory', this)" style="flex:1; min-width:0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 0;">
         <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3.5 6.5C3.5 5.39543 4.39543 4.5 5.5 4.5H18.5C19.6046 4.5 20.5 5.39543 20.5 6.5V7.5C20.5 8.05228 20.0523 8.5 19.5 8.5H4.5C3.94772 8.5 3.5 8.05228 3.5 7.5V6.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 9.5V17C4.5 18.6569 5.84315 20 7.5 20H16.5C18.1569 20 19.5 18.6569 19.5 17V9.5M10 13.5H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         <svg class="vuesax-icon vuesax-bold" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7C3 5.34315 4.34315 4 6 4H18C19.6569 4 21 5.34315 21 7V8C21 8.55228 20.5523 9 20 9H4C3.44772 9 3 8.55228 3 8V7Z" fill="currentColor"/><path d="M4 10.5V17C4 19.2091 5.79086 21 8 21H16C18.2091 21 20 19.2091 20 17V10.5H4ZM10 14H14V15.5H10V14Z" fill="currentColor"/></svg>
-        <span>Inventory</span>
+        <span style="font-size:0.62rem !important; font-weight:400 !important; text-align:center; display:block; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-0.03em;">Inventory</span>
       </div>
-      <div class="nav-tab active" onclick="switchTab('pos', this)">
+      <div class="nav-tab active" onclick="switchTab('pos', this)" style="flex:1; min-width:0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 0;">
         <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="2.5" width="8" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="2.5" width="8" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/><rect x="2.5" y="13.5" width="8" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="8" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
         <svg class="vuesax-icon vuesax-bold" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="9" height="9" rx="3" fill="currentColor"/><rect x="13" y="2" width="9" height="9" rx="3" fill="currentColor"/><rect x="2" y="13" width="9" height="9" rx="3" fill="currentColor"/><rect x="13" y="13" width="9" height="9" rx="3" fill="currentColor"/></svg>
-        <span>POS</span>
+        <span style="font-size:0.62rem !important; font-weight:400 !important; text-align:center; display:block; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-0.03em;">POS</span>
       </div>
-      <div class="nav-tab" onclick="switchTab('events', this)">
+      <div class="nav-tab" onclick="switchTab('events', this)" style="flex:1; min-width:0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 0;">
         <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="vuesax-icon vuesax-bold" width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" fill="currentColor"/><path d="M8 12L11 15L16 9" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Event Prep</span>
+        <span style="font-size:0.62rem !important; font-weight:400 !important; text-align:center; display:block; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-0.03em;">Event Prep</span>
       </div>
-      <div class="nav-tab" onclick="switchTab('settings', this)">
-        <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9C21.7 8.7 21.8 8.4 21.6 8.1L19.6 4.7C19.5 4.5 19.2 4.4 18.9 4.5L16.4 5.5C15.9 5.1 15.3 4.8 14.7 4.5L14.3 1.9C14.3 1.6 14.1 1.4 13.8 1.4H9.8C9.5 1.4 9.3 1.6 9.3 1.9L8.9 4.5C8.3 4.8 7.7 5.1 7.2 5.5L4.7 4.5C4.4 4.4 4.1 4.5 4 4.7L2 8.1C1.8 8.4 1.9 8.7 2.1 8.9L4.2 10.5C4.1 11 4.1 11.5 4.1 12C4.1 12.5 4.1 13 4.2 13.5L2.1 15.1C1.9 15.3 1.8 15.6 2 15.9L4 19.3C4.1 19.5 4.4 19.6 4.7 19.5L7.2 18.5C7.7 18.9 8.3 19.2 8.9 19.5L9.3 22.1C9.3 22.4 9.5 22.6 9.8 22.6H13.8C14.1 22.6 14.3 22.4 14.7 19.5C15.3 19.2 15.9 18.9 16.4 18.5L18.9 19.5C19.2 19.6 19.5 19.5 19.6 19.3L21.6 15.9C21.8 15.6 21.7 15.3 21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.8"/></svg>
+      <div class="nav-tab" onclick="switchTab('settings', this)" style="flex:1; min-width:0; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 0;">
+        <svg class="vuesax-icon vuesax-linear" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5C19.5 13 19.5 12.5 19.5 12C19.5 11.5 19.5 11 19.4 10.5L21.5 8.9C21.7 8.7 21.8 8.4 21.6 8.1L19.6 4.7C19.5 4.5 19.2 4.4 18.9 4.5L16.4 5.5C15.9 5.1 15.3 4.8 14.7 4.5L14.3 1.9C14.3 1.6 14.1 1.4 13.8 1.4H9.8C9.5 1.4 9.3 1.6 9.3 1.9L8.9 4.5C8.3 4.8 7.7 5.1 7.2 5.5L4.7 4.5C4.4 4.4 4.1 4.5 4 4.7L2 8.1C1.8 8.4 1.9 8.7 2.1 8.9L4.2 10.5C4.1 11 4.1 11.5 4.1 12C4.1 12.5 4.1 13 4.2 13.5L2.1 15.1C1.9 15.3 1.8 15.6 2 15.9L4 19.3C4.1 19.5 4.4 19.6 4.7 19.5L7.2 18.5C7.7 18.9 8.3 19.2 8.9 19.5L9.3 22.1C9.3 22.4 9.5 22.6 14.7 19.5C15.3 19.2 15.9 18.9 16.4 18.5L18.9 19.5C19.2 19.6 19.5 19.5 19.6 19.3L21.6 15.9C21.8 15.6 21.7 15.3 21.5 15.1L19.4 13.5Z" stroke="currentColor" stroke-width="1.8"/></svg>
         <svg class="vuesax-icon vuesax-bold" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.29 2.45C10.82 2.15 11.41 2 12 2C12.59 2 13.18 2.15 13.71 2.45L15.34 3.39C15.87 3.69 16.31 4.13 16.61 4.66L17.55 6.29C17.85 6.82 18 7.41 18 8C18 8.59 17.85 9.18 17.55 9.71L16.61 11.34C16.91 11.87 17.06 12.46 17.06 13.05C17.06 13.64 16.91 14.23 16.61 14.76L15.67 16.39C15.37 16.92 14.93 17.36 14.4 17.66L12.77 18.6C12.24 18.9 11.65 19.05 11.06 19.05C10.47 19.05 9.88 18.9 9.35 18.6L7.72 17.66C7.19 17.36 6.75 16.92 6.45 16.39L5.51 14.76C5.21 14.23 5.06 13.64 5.06 13.05C5.06 12.46 5.21 11.87 5.51 11.34L6.45 9.71C6.15 9.18 6 8.59 6 8C6 7.41 6.15 6.82 6.45 6.29L7.39 4.66C7.69 4.13 8.13 3.69 8.66 3.39L10.29 2.45Z" fill="currentColor"/></svg>
-        <span>Settings</span>
+        <span style="font-size:0.62rem !important; font-weight:400 !important; text-align:center; display:block; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-0.03em;">Settings</span>
       </div>
     </nav>
-
-  </div>
 
   <!-- ================= ALL DYNAMIC MODALS ================= -->
 
@@ -256,8 +240,8 @@
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-onboarding')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title" id="onboarding-step-title">Welcome</span>
-        <button class="exit-btn" onclick="closeModal('modal-onboarding')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <div id="onboarding-step-content">
         <!-- Rendered dynamically -->
@@ -269,8 +253,8 @@
   <div class="modal-overlay" id="modal-start-shift">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-start-shift')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Start Shift</span>
-        <button class="exit-btn" onclick="closeModal('modal-start-shift')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Starting Cash Amount (₱)</label>
       <input type="number" class="form-control" id="start-cash-input" value="0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:16px;">
@@ -282,8 +266,8 @@
   <div class="modal-overlay" id="modal-cart-receipt">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-cart-receipt')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title" id="receipt-modal-title">Current Order Receipt</span>
-        <button class="exit-btn" onclick="closeModal('modal-cart-receipt')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div id="cart-items-container" style="max-height:220px; overflow-y:auto; margin-bottom:12px;">
@@ -317,19 +301,19 @@
   <div class="modal-overlay" id="modal-total-sales">
     <div class="modal-card">
       <div class="modal-header">
-        <span class="modal-title">Shift Name</span>
-        <button class="exit-btn" onclick="closeModal('modal-total-sales')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="modal-back-btn" onclick="closeModal('modal-total-sales')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="modal-title">Shift Summary</span>
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Shift Opened: August 5, 2026, 4:29 PM</div>
+      <div style="font-size:0.8rem; color:var(--text-muted); padding-bottom:12px; margin-bottom:14px; border-bottom:1.5px solid #cbd5e1;">Shift Opened: August 5, 2026, 4:29 PM</div>
       
-      <!-- SHIFT REVIEW SUMMARY BOX WITH FIGMA PROTOTYPE SPACING -->
-      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin-bottom:10px; font-size:0.88rem;">
+      <!-- SHIFT REVIEW SUMMARY WITH FIGMA PROTOTYPE SPACING -->
+      <div style="margin-bottom:16px; font-size:0.88rem;">
         <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Starting Cash</span><span>₱0.00</span></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Gross Sales</span><span id="shift-summary-gross">₱1,115.00</span></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Cash Refunds</span><span>₱0.00</span></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Discounts</span><span>₱50.00</span></div>
-        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.05rem; border-top:1px solid #cbd5e1; padding-top:4px;">
-          <span style="font-weight:600;">Net Sales</span><span class="net-sales-amount" style="color:#10b981; font-weight:600;" id="shift-summary-net">₱1,065.00</span>
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;"><span>Discounts</span><span>₱50.00</span></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:1.15rem; border-top:1.5px solid #cbd5e1; padding-top:10px; margin-top:6px;">
+          <span style="font-family:'Roca Two Black', serif !important; font-weight:900 !important; font-size:1.2rem;">Net Sales</span><span class="net-sales-amount" style="color:#10b981; font-family:'Onest', sans-serif !important; font-weight:700 !important; font-size:1.15rem;" id="shift-summary-net">₱1,065.00</span>
         </div>
       </div>
 
@@ -348,8 +332,8 @@
   <div class="modal-overlay" id="modal-receipt-detail">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-receipt-detail')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title" id="receipt-detail-id">Receipt Details</span>
-        <button class="exit-btn" onclick="closeModal('modal-receipt-detail')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div id="receipt-detail-meta" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;"></div>
@@ -373,12 +357,12 @@
   <div class="modal-overlay" id="modal-product-tally">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-product-tally')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Shift Product Tally</span>
-        <button class="exit-btn" onclick="closeModal('modal-product-tally')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div class="search-wrapper">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 16.7467 6.25329 21 11.5 21Z" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22L20 20" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11.5" cy="11.5" r="7.5" stroke="#94a3b8" stroke-width="1.8"/><path d="M17 17L21 21" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/></svg>
         <input type="text" class="search-box" id="tally-search-input" placeholder="Search" onkeyup="filterProductTally()">
       </div>
 
@@ -400,8 +384,8 @@
   <div class="modal-overlay" id="modal-edit-product">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-edit-product')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Product Details</span>
-        <button class="exit-btn" onclick="closeModal('modal-edit-product')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       
       <input type="hidden" id="edit-prod-id">
@@ -413,18 +397,21 @@
       <input type="text" class="form-control" id="edit-prod-name" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px;">
 
       <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">Category</label>
-      <select class="select-dropdown" id="edit-prod-cat">
+      <select class="select-dropdown" id="edit-prod-cat" style="width:100%; margin-bottom:12px;">
         <!-- Rendered by JS -->
       </select>
 
-      <div style="display:flex; gap:10px; margin-bottom:16px;">
-        <div style="flex:1;">
-          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">Retail Price (₱)</label>
-          <input type="number" class="form-control" id="edit-prod-price" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px;">
+      <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">Product Description</label>
+      <textarea class="form-control" id="edit-prod-desc" placeholder="Product Description (Optional)" style="width:100%; height:60px; padding:10px 12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px; font-family:inherit; resize:none; box-sizing:border-box;"></textarea>
+
+      <div style="display:flex; gap:10px; margin-bottom:16px; width:100%; box-sizing:border-box;">
+        <div style="flex:1; min-width:0;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Retail Price</label>
+          <input type="number" step="any" class="form-control" id="edit-prod-price" placeholder="₱0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; box-sizing:border-box;">
         </div>
-        <div style="flex:1;">
-          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">Cost Price (₱)</label>
-          <input type="number" class="form-control" id="edit-prod-cost" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px;">
+        <div style="flex:1; min-width:0;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Cost Price</label>
+          <input type="number" step="any" class="form-control" id="edit-prod-cost" placeholder="₱0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; box-sizing:border-box;">
         </div>
       </div>
 
@@ -437,24 +424,32 @@
   <div class="modal-overlay" id="modal-add-product">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-add-product')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Add Product</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-product')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div class="img-upload-box" id="add-img-preview-box" onclick="document.getElementById('product-img-file-input').click()">
-        <i class="fa-solid fa-image" style="font-size:1.8rem; color:#94a3b8;"></i>
-        <span>Add Photo</span>
+        <svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:0.85rem; font-weight:600; color:#64748b;">Add Photo</span>
       </div>
 
       <input type="text" class="form-control" id="new-prod-name" placeholder="Product Name*" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px;">
       
-      <select class="select-dropdown" id="new-prod-cat">
+      <select class="select-dropdown" id="new-prod-cat" style="width:100%; margin-bottom:12px;">
         <!-- Rendered dynamically -->
       </select>
 
-      <div style="display:flex; gap:10px; margin-bottom:16px;">
-        <input type="number" class="form-control" id="new-prod-price" placeholder="Price (₱)*" style="flex:1; padding:12px; border:1px solid var(--border); border-radius:12px;">
-        <input type="number" class="form-control" id="new-prod-cost" placeholder="Cost (₱)" style="flex:1; padding:12px; border:1px solid var(--border); border-radius:12px;">
+      <textarea class="form-control" id="new-prod-desc" placeholder="Product Description (Optional)" style="width:100%; height:60px; padding:10px 12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px; font-family:inherit; resize:none; box-sizing:border-box;"></textarea>
+
+      <div style="display:flex; gap:10px; margin-bottom:16px; width:100%; box-sizing:border-box;">
+        <div style="flex:1; min-width:0;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Retail Price</label>
+          <input type="number" step="any" class="form-control" id="new-prod-price" placeholder="₱0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; box-sizing:border-box;">
+        </div>
+        <div style="flex:1; min-width:0;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:4px; display:block;">Cost Price</label>
+          <input type="number" step="any" class="form-control" id="new-prod-cost" placeholder="₱0.00" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; box-sizing:border-box;">
+        </div>
       </div>
 
       <button class="btn-gold" onclick="saveNewProduct()">Add Product</button>
@@ -466,8 +461,8 @@
   <div class="modal-overlay" id="modal-add-discount">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-add-discount')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Add Discount</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-discount')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <input type="text" class="form-control" id="new-disc-name" placeholder="Discount Name (e.g. Student Discount)" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px;">
@@ -489,8 +484,8 @@
   <div class="modal-overlay" id="modal-add-category">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-add-category')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Add Category</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-category')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
       <input type="text" class="form-control" id="new-cat-name" placeholder="Category Name" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:16px;">
       <button class="btn-gold" onclick="saveNewCategory()">Confirm</button>
@@ -502,8 +497,8 @@
   <div class="modal-overlay" id="modal-add-task">
     <div class="modal-card">
       <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal('modal-add-task')" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <span class="modal-title">Add New Task</span>
-        <button class="exit-btn" onclick="closeModal('modal-add-task')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
       </div>
 
       <div class="img-upload-box" style="height:90px;" onclick="alert('Icon selector opened!')">
@@ -548,11 +543,17 @@
   <!-- MODAL: TRASH VIEW -->
   <div class="modal-overlay" id="modal-trash">
     <div class="modal-card">
-      <div class="modal-header">
-        <span class="modal-title">Trash Bin</span>
-        <div>
-          <button class="exit-btn" style="color:var(--danger-red); margin-right:10px; display:inline-flex; flex-direction:column; align-items:center;" onclick="emptyAllTrash()"><i class="fa-solid fa-trash-can"></i> Delete All</button>
-          <button class="exit-btn" onclick="closeModal('modal-trash')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+        <h2 class="modal-title" style="font-family:'Roca Two Black', serif; font-size:1.6rem; font-weight:800; margin:0;">Trash</h2>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <button onclick="emptyAllTrash()" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Delete All">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 5.98C17.67 5.65 14.32 5.48 10.98 5.48C9 5.48 7.02 5.58 5.04 5.78L3 5.98M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97M18.85 9.14L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79C6 22 5.91 20.78 5.8 19.21L5.15 9.14M10.33 16.5H13.67M9.5 12.5H14.5" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Delete All</span>
+          </button>
+          <button onclick="closeModal('modal-trash')" style="background:none; border:none; cursor:pointer; color:#64748b; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-weight:600; font-size:0.65rem;" aria-label="Exit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8.9 7.56C9.21 3.96 11.06 2.49 15.11 2.49H15.24C19.71 2.49 21.5 4.28 21.5 8.75V15.27C21.5 19.74 19.71 21.53 15.24 21.53H15.11C11.09 21.53 9.24 20.08 8.91 16.54" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12H3.62M5.85 8.65L2.5 12L5.85 15.35" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Exit</span>
+          </button>
         </div>
       </div>
       <div id="trash-items-container">
@@ -564,9 +565,9 @@
   <!-- MODAL: INTEGRATIONS -->
   <div class="modal-overlay" id="modal-integrations">
     <div class="modal-card">
-      <div class="modal-header">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
         <span class="modal-title" id="integration-modal-title">App Integrations</span>
-        <button class="exit-btn" onclick="closeModal('modal-integrations')" style="display:inline-flex; flex-direction:column; align-items:center;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+        <button class="exit-btn" onclick="closeModal('modal-integrations')" style="margin-left:auto !important; display:inline-flex; flex-direction:column; align-items:center; background:none; border:none; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-bottom:2px;"><path d="M8.9 7.56C9.21 3.96 11.06 2.49 15.11 2.49H15.24C19.71 2.49 21.5 4.28 21.5 8.75V15.27C21.5 19.74 19.71 21.53 15.24 21.53H15.11C11.09 21.53 9.24 20.08 8.91 16.54" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12H3.62M5.85 8.65L2.5 12L5.85 15.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:0.65rem; color:#64748b; font-weight:600;">Exit</span></button>
       </div>
       <div id="integrations-list-content">
         <!-- Rendered by JS -->
@@ -574,11 +575,13 @@
     </div>
   </div>
 
+  </div> <!-- Close .mobile-frame -->
+
   <!-- JavaScript Modules -->
-  <script src="js/data.js"></script>
-  <script src="js/pos.js"></script>
-  <script src="js/inventory.js"></script>
-  <script src="js/shift.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/data.js?v=2.9"></script>
+  <script src="js/pos.js?v=2.9"></script>
+  <script src="js/inventory.js?v=2.9"></script>
+  <script src="js/shift.js?v=2.9"></script>
+  <script src="js/app.js?v=2.9"></script>
 </body>
 </html>

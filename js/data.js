@@ -15,12 +15,12 @@ let uploadedImageDataUrl = null;
  * Primary product catalog
  */
 let products = [
-  { id: 1, name: 'Cat Vinyl Sticker', category: 'stickers', price: 50, cost: 15, stock: 120, sold: 48, img: 'images/cat_sticker.png' },
-  { id: 2, name: 'Cyberpunk Print (A4)', category: 'prints', price: 350, cost: 100, stock: 25, sold: 14, img: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop&q=80' },
-  { id: 3, name: 'Floral Tote Bag', category: 'totes', price: 650, cost: 250, stock: 18, sold: 9, img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=300&auto=format&fit=crop&q=80' },
-  { id: 4, name: 'Graphic Tee (L)', category: 'shirts', price: 850, cost: 350, stock: 15, sold: 6, img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&auto=format&fit=crop&q=80' },
-  { id: 5, name: 'Holo Sticker Pack', category: 'stickers', price: 180, cost: 50, stock: 60, sold: 22, img: 'images/cat_sticker.png' },
-  { id: 6, name: 'Sunset Print (A3)', category: 'prints', price: 500, cost: 180, stock: 12, sold: 5, img: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=300&auto=format&fit=crop&q=80' }
+  { id: 1, name: 'Cat Vinyl Sticker', category: 'Stickers', price: 50, cost: 15, stock: 120, sold: 48, img: 'images/cat_sticker.png' },
+  { id: 2, name: 'Cyberpunk Print (A4)', category: 'Art Prints', price: 350, cost: 100, stock: 25, sold: 14, img: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop&q=80' },
+  { id: 3, name: 'Floral Tote Bag', category: 'Tote Bags', price: 650, cost: 250, stock: 18, sold: 9, img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=300&auto=format&fit=crop&q=80' },
+  { id: 4, name: 'Graphic Tee (L)', category: 'T-Shirts', price: 850, cost: 350, stock: 15, sold: 6, img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&auto=format&fit=crop&q=80' },
+  { id: 5, name: 'Holo Sticker Pack', category: 'Stickers', price: 180, cost: 50, stock: 60, sold: 22, img: 'images/cat_sticker.png' },
+  { id: 6, name: 'Sunset Print (A3)', category: 'Art Prints', price: 500, cost: 180, stock: 12, sold: 5, img: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=300&auto=format&fit=crop&q=80' }
 ];
 
 /** 
@@ -49,8 +49,11 @@ let tasks = [
 /** @type {Array<{id: number, name: string, category: string, price: number, qty: number}>} Active checkout cart */
 let cart = [];
 
-/** @type {Array<{type: string, name: string}>} Soft-deleted items queue */
-let trashBin = [];
+/** @type {Array<{id: number, name: string, datetime: string, price: string}>} Soft-deleted shifts queue */
+let trashBin = [
+  { id: 1, name: 'Shift 1', datetime: 'Aug. 8, 2026 | 4:29 PM', price: '₱12,400.00' },
+  { id: 2, name: 'Shift 2', datetime: 'Aug. 1, 2026 | 6:15 PM', price: '₱9,850.00' }
+];
 
 /** 
  * @type {Array<{id: string, date: string, time: string, amount: number, payment: string, items: Array<Object>, refunded: boolean}>}

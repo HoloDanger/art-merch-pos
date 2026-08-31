@@ -26,7 +26,9 @@ function renderInventoryProducts() {
 
   let filtered = products.filter(p => {
     const matchQ = p.name.toLowerCase().includes(searchVal);
-    const matchCat = (catVal === 'all') || (p.category.toLowerCase() === catVal.toLowerCase());
+    const pCat = (p.category || '').toLowerCase();
+    const cVal = (catVal || '').toLowerCase();
+    const matchCat = (cVal === 'all') || (pCat === cVal) || (pCat.includes(cVal) || cVal.includes(pCat));
     return matchQ && matchCat;
   });
 
@@ -51,23 +53,8 @@ function filterInventoryProducts(val) {
  * @param {Event} event - File input change event
  */
 function handleProductImageUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    uploadedImageDataUrl = e.target.result;
-    
-    // Update preview in edit modal or add box
-    const editImg = document.getElementById('edit-prod-img');
-    if (editImg) editImg.src = uploadedImageDataUrl;
-
-    const addImgBox = document.getElementById('add-img-preview-box');
-    if (addImgBox) {
-      addImgBox.innerHTML = `<img src="${uploadedImageDataUrl}" alt="Uploaded Image" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">`;
-    }
-  };
-  reader.readAsDataURL(file);
+  alert('📷 Live photo upload from device gallery is a Premium Tier feature. Budget upgrade required to unlock file picker integration.');
+  if (event && event.target) event.target.value = '';
 }
 
 /**
@@ -83,6 +70,7 @@ function openEditProductModal(id) {
   document.getElementById('edit-prod-cat').value = prod.category;
   document.getElementById('edit-prod-price').value = prod.price;
   document.getElementById('edit-prod-cost').value = prod.cost || 30;
+  if (document.getElementById('edit-prod-desc')) document.getElementById('edit-prod-desc').value = prod.desc || '';
   document.getElementById('edit-prod-img').src = prod.img;
   document.getElementById('modal-edit-product').classList.add('active');
 }
@@ -98,6 +86,7 @@ function saveEditedProduct() {
     prod.category = document.getElementById('edit-prod-cat').value;
     prod.price = parseFloat(document.getElementById('edit-prod-price').value || prod.price);
     prod.cost = parseFloat(document.getElementById('edit-prod-cost').value || prod.cost);
+    if (document.getElementById('edit-prod-desc')) prod.desc = document.getElementById('edit-prod-desc').value;
     if (uploadedImageDataUrl) prod.img = uploadedImageDataUrl;
 
     renderInventoryProducts();
@@ -214,7 +203,7 @@ function openAddProductModal() {
   uploadedImageDataUrl = null;
   const addImgBox = document.getElementById('add-img-preview-box');
   if (addImgBox) {
-    addImgBox.innerHTML = `<i class="fa-solid fa-image" style="font-size:1.8rem; color:#94a3b8;"></i><span>Add Photo</span>`;
+    addImgBox.innerHTML = `<svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:0.85rem; font-weight:600; color:#64748b;">Add Photo</span>`;
   }
   refreshCategoryDropdowns();
   document.getElementById('modal-add-product').classList.add('active'); 
@@ -232,15 +221,18 @@ function openAddCategoryModal() { document.getElementById('modal-add-category').
 function saveNewProduct() {
   const name = document.getElementById('new-prod-name').value;
   const cat = document.getElementById('new-prod-cat').value;
+  const desc = (document.getElementById('new-prod-desc')?.value || '');
   const price = parseFloat(document.getElementById('new-prod-price').value || 100);
+  const cost = parseFloat(document.getElementById('new-prod-cost')?.value || 30);
   if (!name) { alert('Please enter product name'); return; }
 
   const defaultImg = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60';
-  products.push({ id: Date.now(), name, category: cat, price, cost: 30, stock: 50, sold: 0, img: uploadedImageDataUrl || defaultImg });
+  products.push({ id: Date.now(), name, category: cat, desc, price, cost, stock: 50, sold: 0, img: uploadedImageDataUrl || defaultImg });
   renderInventoryProducts();
   renderPosProducts();
   closeModal('modal-add-product');
   document.getElementById('new-prod-name').value = '';
+  if (document.getElementById('new-prod-desc')) document.getElementById('new-prod-desc').value = '';
 }
 
 /**
