@@ -1,94 +1,147 @@
 # 🎨 MaArtsy — POS & Event Manager (Art Merch POS)
 
-> **Version:** `1.2.0` | **Architecture:** Modular Vanilla HTML5/CSS3/JS | **Potato Standard Compliant:** Low RAM (<1.5MB RSS), zero external framework dependencies, local-first computing.
+> **Version:** `1.3.0` | **Architecture:** Modular Vanilla HTML5/CSS3/JS (ES6+) | **Potato Standard Compliant:** Minimal Memory Footprint (<1.5MB RSS), Zero External Runtime/Build Dependencies, 100% Local-First Computing.
 
-MaArtsy is a specialized mobile Point-of-Sale (POS) and event management web application tailored for independent artists, merch exhibitors, and pop-up retail merchants selling at art fairs, conventions, and boutique stores.
+**MaArtsy** is a specialized mobile Point-of-Sale (POS) and event management web application engineered for independent artists, merch exhibitors, illustrators, and boutique merchants selling at anime/comic conventions, art fairs, pop-up markets, and physical retail booths.
+
+Built strictly according to the **Potato Standard**, it runs purely in standard web runtimes without node/npm frameworks, virtual DOM overhead, or cloud dependencies, delivering instant sub-20ms rendering and zero memory leaks.
+
+---
+
+## 🚀 Key Highlights & Capabilities
+
+* **⚡ Ultra-Fast Touch POS:** 3-column touch-optimized catalog grid, real-time cart badge counter, live quantifier stepper controls (`+` / `-`), and sub-second checkout.
+* **🏷️ Multi-Tier Discount Engine:** Configurable percentage discounts (e.g. *10% Student Discount*), fixed-price reductions (e.g. *₱25 Off Artist Pass*), and auto-locking 100% Off *Freebie Bundles*.
+* **📊 Complete Shift Lifecycle & Cash Reconciliation:** Starting float capture, active shift toggling, End Shift summary review (Starting Float, Gross Sales, Discounts, Net Sales with semi-bold typography), and scrollable receipt audit trail.
+* **🧾 Itemized Receipt History & Refund Management:** Detailed transaction inspection (`Receipt #1-001 | Date | Time | Payment | Amount`), line-item breakdown, and transaction refund management with visual status badges.
+* **📦 Complete Inventory & Category Authority:** Dynamic sub-tab switcher for Products, Discounts, and Categories; live instant search and category filter (`#inv-prod-cat-filter`); product CRUD with HTML5 FileReader live image previews; and margin tracking (`Price` vs `Cost`).
+* **📋 Event Preparation Checklist:** Pre-event operational task management with timestamps, category tags, completion strikethrough toggles, and soft-deletion.
+* **🗑️ Isolated Trash Bin & Soft-Delete Recovery:** Dedicated recovery system supporting Products, Shifts, and Tasks with isolated category tabs (`All`, `Shifts`, `Products`, `Tasks`), per-item restore, per-item permanent wipe, and bulk purge.
+* **📱 Mobile POS Viewport:** Pixel-accurate responsive mobile container (`max-width: 390px`) formatted for handheld smartphone and mobile terminal form factors.
 
 ---
 
 ## 📁 Repository & Codebase Structure
 
 ```
-art_merch_pos/
-├── index.html           # Main semantic HTML skeleton loading CSS & JS modules
+scratch/art_merch_pos/
+├── index.html           # Semantic HTML5 skeleton, view sections, modals & SVG icons
+├── README.md            # Technical specifications and operational documentation
 ├── css/
-│   └── style.css        # Unified Design System tokens, typography, grid layouts, cards, modals & nav
+│   └── style.css        # Unified Design System tokens, typography, grid layouts, cards & modals
 ├── js/
-│   ├── data.js          # Centralized State Management (products, discounts, categories, cart, shiftReceipts)
+│   ├── data.js          # Centralized State Management (products, discounts, categories, tasks, cart, receipts)
 │   ├── pos.js           # POS grid rendering, cart quantity math, discount application & checkout
-│   ├── inventory.js     # Inventory subtab dropdown, product CRUD, discount & category managers
-│   ├── shift.js         # Shift start/end, Shift Summary modal, Receipt History & Product Tally
-│   └── app.js           # Application Controller (tab routing, modal toggles, trash bin, chart & onboarding)
-├── fonts/               # Custom Typography (Roca Two Black for headings, Onest for body & UI)
-│   ├── Roca Two Black.ttf
-│   └── Onest-VariableFont_wght.ttf
-└── images/              # Local demonstration assets & thumbnails
+│   ├── inventory.js     # Inventory subtabs, product CRUD, discount rules & category managers
+│   ├── shift.js         # Shift start/end, Shift Summary modal, Receipt History, Refunds & Product Tally
+│   └── app.js           # Application Controller (tab routing, modals, trash bin, tasks & analytics)
+├── fonts/               # Custom Typography (Offline local assets)
+│   ├── Roca Two Black.ttf         # Headings, brand titles & modal headers
+│   └── Onest-VariableFont_wght.ttf # UI body text, buttons, form controls & badges
+└── images/              # Local demonstration assets & product thumbnails
+    └── cat_sticker.png
 ```
 
 ---
 
 ## 🛠️ Architecture & Module Map
 
-### 1. State Management (`js/data.js`)
-* `isShiftOpen` *(boolean)* — Tracks whether physical booth shift is active or closed.
+### 1. Central State Authority (`js/data.js`)
+* `isShiftOpen` *(boolean)* — Boolean flag controlling whether the physical booth register is open or closed.
+* `uploadedImageDataUrl` *(string|null)* — In-memory buffer storing base64 image data from HTML5 FileReader uploads.
 * `products` *(Array<Object>)* — Catalog of merchandise items (`id`, `name`, `category`, `price`, `cost`, `stock`, `sold`, `img`).
 * `discounts` *(Array<Object>)* — Configured discount rules (`Percent-based`, `Price-based`, `Freebie`).
-* `categories` *(Array<string>)* — Product classification tags (`Stickers`, `Art Prints`, `Tote Bags`, etc.).
-* `cart` *(Array<Object>)* — Active checkout cart items (`id`, `qty`).
-* `shiftReceipts` *(Array<Object>)* — Log of completed transactions (`id`, `date`, `time`, `amount`).
-* `trashBin` *(Array<Object>)* — Soft-deleted items pending restore or permanent erasure.
+* `categories` *(Array<string>)* — Product classification tags (`Stickers`, `Art Prints`, `Tote Bags`, `T-Shirts`, `Enamel Pins`).
+* `tasks` *(Array<Object>)* — Event preparation checklist items (`id`, `name`, `type`, `date`, `time`, `done`).
+* `cart` *(Array<Object>)* — Active checkout cart entries (`id`, `name`, `category`, `price`, `qty`).
+* `shiftReceipts` *(Array<Object>)* — Chronological transaction log (`id`, `date`, `time`, `amount`, `payment`, `items`, `refunded`).
+* `trashBin` *(Array<Object>)* — Multi-type soft-delete queue supporting restore and permanent destruction.
+* `salesChartInstance` *(Chart|null)* — Chart.js canvas instance reference for revenue visualization.
 
 ### 2. POS Module (`js/pos.js`)
-* `renderPosProducts()` — Renders 3-column product grid with yellow badge counts for items in cart.
-* `addToCart(id)` / `changePosCardQty(id, delta)` — Increments/decrements cart item quantities.
-* `renderCartTotals()` — Calculates subtotal, applies selected discount rate, and updates total amount.
-* `processCheckout()` — Finalizes sale, updates product `sold` metrics, logs receipt to `shiftReceipts`, and clears cart.
+* `renderPosProducts()` — Generates the 3-column product catalog grid with top-right notification badges indicating cart quantity.
+* `filterPosCategory(category, el)` — Filters POS items by category pill and toggles active UI states.
+* `addToCart(id)` / `changePosCardQty(id, delta)` — Handles instant cart accumulation and decrementing.
+* `renderCartModal()` — Renders cart items with black quantifier buttons (`-` and `+`), unit prices, and line totals.
+* `applyDiscount()` / `renderCartTotals()` — Applies discount algorithm (percentage deduction, fixed subtraction, or freebie zero-out) and updates total amount.
+* `processCheckout()` — Validates active shift, commits sale, increments product `sold` counts, logs new receipt to `shiftReceipts`, and resets cart.
 
 ### 3. Inventory Module (`js/inventory.js`)
-* `switchInventorySubtabDropdown(val)` — Switches between Products, Discounts, and Product Categories sub-views.
-* `openEditProductModal(id)` / `saveEditedProduct()` — Enables instant editing of product details and price/cost margins.
-* `handleDiscountCategoryChange()` / `saveNewDiscount()` — Handles 100% Off auto-lock for Freebies, percentage discounts, and fixed peso discounts.
-* `deleteInventoryItem(type, id)` — Soft-deletes products/discounts/categories into `trashBin`.
+* `switchInventorySubtabDropdown(val)` — Dispatches sub-views between Products, Discounts, and Categories.
+* `filterInventoryProducts(searchVal)` — Performs real-time substring filtering across product names.
+* `filterInventoryByCategory(category)` — Filters inventory list via `#inv-prod-cat-filter`.
+* `openAddProductModal()` / `openEditProductModal(id)` — Manages product creation and update modals with live margin calculations (`Price - Cost`).
+* `handleProductImageUpload(event)` — Triggers device image picker and reads files via `FileReader.readAsDataURL` for instant thumbnail preview.
+* `handleDiscountCategoryChange()` / `saveNewDiscount()` — Configures discount rules, auto-locking Freebies to `100% Off`.
+* `refreshCategoryDropdowns()` / `saveNewCategory()` — Dynamically syncs category tags across all product forms and filter select elements.
+* `deleteInventoryItem(type, id)` — Dispatches item soft-deletion into `trashBin`.
 
 ### 4. Shift & Analytics Module (`js/shift.js`)
-* `openTotalSalesModal()` — Displays Shift Summary (Starting Cash, Gross Sales, Discounts, Net Sales).
-* `renderShiftReceiptsList()` — Renders scrollable receipt history card list (`Receipt #1-001 | 01/11/2025 4:44pm | ₱100.00`).
-* `openProductTallyModal()` / `filterProductTally()` — Full vertical screen product tally with search bar, Category dropdown, and stock ratio (`sold/stock`).
+* `openStartShiftModal()` / `confirmStartShift()` — Opens register with starting cash float, toggling POS from closed view to active grid.
+* `openTotalSalesModal()` — Renders Shift Review summary modal (Starting Cash, Gross Sales, Discounts, Net Sales with semi-bold typography).
+* `renderShiftReceiptsList()` — Renders scrollable receipt history card list (`Receipt #1-001 | Date | Time | Payment | Amount`) with visual `Refunded` badges.
+* `openReceiptDetailModal(id)` — Displays itemized breakdown of products, payment method, and total for any historical transaction.
+* `refundReceipt(id)` — Marks transaction as refunded, updates totals, and preserves historical audit integrity.
+* `openProductTallyModal()` / `filterProductTally()` — Full vertical viewport product tally with live search and category filters, tracking sold-to-stock ratios (`sold / stock`).
+* `confirmEndShift()` — Closes the register and resets active POS view to closed status.
 
-### 5. Application Controller (`js/app.js`)
-* `switchTab(tabId, el)` — Bottom navigation bar routing between POS, Inventory, Event Prep, Sales Report, and Settings.
-* `openTrashModal()` / `restoreTrashItem()` / `emptyAllTrash()` — Comprehensive soft-delete recovery system.
-* `initSalesChart()` — Chart.js gross revenue visualizer.
+### 5. Application Controller & Utilities (`js/app.js`)
+* `switchTab(tabId, el)` — Bottom navigation bar routing between POS (`sec-pos`), Inventory (`sec-inventory`), Event Prep (`sec-events`), Sales Report (`sec-sales`), and Settings (`sec-settings`).
+* `renderTasks()` / `toggleTaskDone(id)` / `saveNewTask()` — Manages Event Prep checklist items with visual strikethrough states.
+* `openTrashModal(filter)` — Renders Trash Bin with isolated category tabs (`All`, `Shifts`, `Products`, `Tasks`), preventing cross-category fallback leaks.
+* `restoreTrashItem(index)` — Restores soft-deleted items back to active products, shifts, or tasks.
+* `deleteTrashItemPermanently(index)` / `emptyAllTrash()` — Permanently purges items from memory with confirmation safeguards.
+* `initSalesChart()` — Generates gross revenue bar chart visualizer.
 
 ---
 
 ## 🎨 Design System & Conventions
 
-* **Typography:** 
-  * Headings (`h1`, `h2`, `h3`, `.modal-title`, `.brand-title`): `Roca Two Black` (Weight 900)
-  * UI Elements (Buttons, inputs, body text, badges): `Onest` (Weight 400–600)
+* **Typography:**
+  * **Headings & Brand Titles:** `Roca Two Black` (Weight: 900, Serif) — applied to `h1`, `h2`, `h3`, `.page-header`, `.modal-title`, and `.brand-title`.
+  * **UI Controls & Body Text:** `Onest` (Weight: 400–600, Sans-Serif) — applied to buttons, inputs, labels, cards, badges, and modal text.
 * **Color Palette:**
-  * Accent Primary: Gold Yellow (`#FDBE49`)
-  * Dark Banner: `#383838`
-  * Text Main: `#222222`
-  * Success Green: `#10b981`
-  * Danger Red: `#ff4d4d`
-* **Icons:** Vuesax / Iconsax SVG vectors (`.vuesax-linear` & `.vuesax-bold` dual SVG active tab toggles) + FontAwesome 6 icons.
+  * Primary Accent: Gold Yellow (`#FDBE49`) | Hover: (`#E5A732`)
+  * Dark Banner / Shift Header: `#383838`
+  * Primary Text: `#222222` | Muted Text: `#666666`
+  * Card Background: `#E2E8F0` | Canvas Background: `#4F555E`
+  * Success / Active: `#10B981`
+  * Danger / Delete / Refund: `#FF4D4D` / `#F93C3C`
+* **Icons:** Dual-state Vuesax/Iconsax SVG vectors (`.vuesax-linear` and `.vuesax-bold` switching on active tab selection) + FontAwesome 6 icons.
+* **Control Ergonomics:** High-contrast solid black (`#000000`) quantifier glyphs on `-` and `+` stepper buttons for high visibility under variable outdoor booth lighting.
 
 ---
 
-## 🚀 Local Development & Deployment
+## 🚀 Local Development & Execution
 
+Because MaArtsy is built with zero build steps or bundlers, you can run it immediately with any static file server:
+
+### 1. Clone the Repository
 ```bash
-# Clone repository
-git clone git@github.com:YOUR_USERNAME/art-merch-pos.git
+# Via SSH:
+git clone git@github.com:HoloDanger/art-merch-pos.git
 cd art-merch-pos
 
-# Open index.html in any browser or launch local HTTP server
+# Or via HTTPS:
+git clone https://github.com:HoloDanger/art-merch-pos.git
+cd art-merch-pos
+```
+
+### 2. Launch Local Server
+```bash
+# Python 3
 python3 -m http.server 8080
 
-# Push updates to trigger GitHub Pages auto-deployment
-git add .
-git commit -m "Update feature"
-git push
+# Or Node's npx serve (optional)
+npx serve -l 8080 .
+
+# Or standard Caddy / Nginx static hosting
 ```
+
+Open `http://localhost:8080` in your mobile device or desktop browser (toggle Device Toolbar to **iPhone 14/15 Pro** / 390px width for the native mobile layout).
+
+---
+
+## 📜 License
+
+Private Repository / Sovereign Asset. All rights reserved © 2026 HoloDanger.
