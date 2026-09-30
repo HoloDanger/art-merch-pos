@@ -1,6 +1,8 @@
 # 🎨 MaArtsy — POS & Event Manager (Art Merch POS)
 
-> **Version:** `1.3.0` | **Architecture:** Modular Vanilla HTML5/CSS3/JS (ES6+) | **Potato Standard Compliant:** Minimal Memory Footprint (<1.5MB RSS), Zero External Runtime/Build Dependencies, 100% Local-First Computing.
+> **Version:** `1.3.0`  
+> **Architecture:** Modular Vanilla HTML5 / CSS3 / ES6+ (Zero Build Step)  
+> **Potato Standard:** `<1.5MB` RSS • Zero External Dependencies • 100% Local-First
 
 **MaArtsy** is a specialized mobile Point-of-Sale (POS) and event management web application engineered for independent artists, merch exhibitors, illustrators, and boutique merchants selling at anime/comic conventions, art fairs, pop-up markets, and physical retail booths.
 
