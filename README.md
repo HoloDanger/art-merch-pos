@@ -47,16 +47,16 @@ scratch/art_merch_pos/
 ## 🛠️ Architecture & Module Map
 
 ### 1. Central State Authority (`js/data.js`)
-* `isShiftOpen` *(boolean)* — Boolean flag controlling whether the physical booth register is open or closed.
-* `uploadedImageDataUrl` *(string|null)* — In-memory buffer storing base64 image data from HTML5 FileReader uploads.
-* `products` *(Array<Object>)* — Catalog of merchandise items (`id`, `name`, `category`, `price`, `cost`, `stock`, `sold`, `img`).
-* `discounts` *(Array<Object>)* — Configured discount rules (`Percent-based`, `Price-based`, `Freebie`).
-* `categories` *(Array<string>)* — Product classification tags (`Stickers`, `Art Prints`, `Tote Bags`, `T-Shirts`, `Enamel Pins`).
-* `tasks` *(Array<Object>)* — Event preparation checklist items (`id`, `name`, `type`, `date`, `time`, `done`).
-* `cart` *(Array<Object>)* — Active checkout cart entries (`id`, `name`, `category`, `price`, `qty`).
-* `shiftReceipts` *(Array<Object>)* — Chronological transaction log (`id`, `date`, `time`, `amount`, `payment`, `items`, `refunded`).
-* `trashBin` *(Array<Object>)* — Multi-type soft-delete queue supporting restore and permanent destruction.
-* `salesChartInstance` *(Chart|null)* — Chart.js canvas instance reference for revenue visualization.
+* `isShiftOpen` (`boolean`) — Boolean flag controlling whether the physical booth register is open or closed.
+* `uploadedImageDataUrl` (`string|null`) — In-memory buffer storing base64 image data from HTML5 FileReader uploads.
+* `products` (`Array<Object>`) — Catalog of merchandise items (`id`, `name`, `category`, `price`, `cost`, `stock`, `sold`, `img`).
+* `discounts` (`Array<Object>`) — Configured discount rules (`Percent-based`, `Price-based`, `Freebie`).
+* `categories` (`Array<string>`) — Product classification tags (`Stickers`, `Art Prints`, `Tote Bags`, `T-Shirts`, `Enamel Pins`).
+* `tasks` (`Array<Object>`) — Event preparation checklist items (`id`, `name`, `type`, `date`, `time`, `done`).
+* `cart` (`Array<Object>`) — Active checkout cart entries (`id`, `name`, `category`, `price`, `qty`).
+* `shiftReceipts` (`Array<Object>`) — Chronological transaction log (`id`, `date`, `time`, `amount`, `payment`, `items`, `refunded`).
+* `trashBin` (`Array<Object>`) — Multi-type soft-delete queue supporting restore and permanent destruction.
+* `salesChartInstance` (`Chart|null`) — Chart.js canvas instance reference for revenue visualization.
 
 ### 2. POS Module (`js/pos.js`)
 * `renderPosProducts()` — Generates the 3-column product catalog grid with top-right notification badges indicating cart quantity.
